@@ -1,1 +1,81 @@
-<p>typeahead works!</p>
+<div class="relative">
+  <app-icon name="search" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-ink-400" />
+  <input #box type="text" role="combobox" aria-autocomplete="list"
+         [attr.aria-expanded]="open()" aria-controls="ta-listbox"
+         [attr.aria-activedescendant]="open() && results().length ? 'ta-opt-' + active() : null"
+         class="input-desk pl-9 pr-16"
+         [value]="query()"
+         (input)="onInput($event)" (focus)="onFocus()" (keydown)="onKey($event)"
+         [placeholder]="'Search ' + totalDocs() + ' documents…'"
+         aria-label="Search all documents" autocomplete="off" spellcheck="false" />
+  <div class="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-1.5">
+    @if (searching()) {
+      <app-icon name="loader" class="animate-spin text-sm text-amber-400" />
+    } @else if (query()) {
+      <button type="button" (click)="clear()" aria-label="Clear search"
+              class="icon-btn size-6 text-ink-400 hover:bg-ink-800 hover:text-paper-100">
+        <app-icon name="x" class="text-xs" />
+      </button>
+    } @else {
+      <kbd>/</kbd>
+    }
+  </div>
+</div>
+
+@if (open()) {
+  <div id="ta-listbox" role="listbox" aria-label="Search results"
+       class="absolute inset-x-0 top-full z-50 mt-2 max-h-[420px] overflow-y-auto rounded-xl border border-ink-700 bg-ink-850/95 shadow-pop backdrop-blur animate-pop">
+    <div class="flex items-center justify-between border-b border-ink-800 px-4 py-2">
+      <span class="label-mono">{{ query() ? 'Results · ' + results().length : 'Recently updated' }}</span>
+      <span class="label-mono text-ink-500">across every collection</span>
+    </div>
+
+    @if (offline()) {
+      <div class="flex items-center gap-3 px-4 py-5 text-sm text-vermil-400">
+        <app-icon name="alert" /> API offline — start it with <code class="font-mono text-xs">npm run api</code>
+      </div>
+    } @else if (!results().length && !searching()) {
+      <div class="px-4 py-6 text-center">
+        <app-icon name="feather" class="text-2xl text-ink-500" />
+        <p class="mt-2 text-sm text-ink-300">No matches for “{{ query() }}”.</p>
+        <p class="mt-1 font-mono text-[11px] text-ink-500">Titles, tags and every field value are searched.</p>
+      </div>
+    } @else {
+      <ul class="py-1">
+        @for (hit of results(); track hit.doc.id; let i = $index) {
+          <li [id]="'ta-opt-' + i" role="option" [attr.aria-selected]="i === active()"
+              (mousedown)="$event.preventDefault()" (click)="select(hit)" (mouseenter)="active.set(i)"
+              class="flex cursor-pointer items-center gap-3 px-4 py-2.5 transition-colors"
+              [class.bg-ink-800]="i === active()">
+            <span class="grid size-8 shrink-0 place-items-center rounded-lg text-base"
+                  [style.background]="tint(hit.color, 18)" [style.border]="'1px solid ' + tint(hit.color, 35)">{{ hit.emoji }}</span>
+            <div class="min-w-0 flex-1">
+              <p class="truncate text-sm font-medium text-paper-100">
+                @for (part of parts(hit.doc.title); track $index) {
+                  @if (part.hit) { <mark>{{ part.text }}</mark> } @else { {{ part.text }} }
+                }
+              </p>
+              <p class="truncate text-xs text-ink-400">
+                @for (part of parts(hit.snippet); track $index) {
+                  @if (part.hit) { <mark>{{ part.text }}</mark> } @else { {{ part.text }} }
+                }
+              </p>
+            </div>
+            <div class="shrink-0 text-right">
+              <span class="block font-mono text-[10px] uppercase tracking-wider text-ink-500">{{ hit.matchField }}</span>
+              <span class="mt-0.5 inline-flex items-center gap-1.5 font-mono text-[10px] text-ink-400">
+                <span class="size-1.5 rounded-full" [style.background]="hit.color"></span>{{ hit.collectionName }}
+              </span>
+            </div>
+          </li>
+        }
+      </ul>
+    }
+
+    <div class="flex items-center gap-3 border-t border-ink-800 px-4 py-2">
+      <span class="flex items-center gap-1 font-mono text-[10px] text-ink-500"><kbd>↑</kbd><kbd>↓</kbd> navigate</span>
+      <span class="flex items-center gap-1 font-mono text-[10px] text-ink-500"><kbd>↵</kbd> open</span>
+      <span class="flex items-center gap-1 font-mono text-[10px] text-ink-500"><kbd>esc</kbd> close</span>
+    </div>
+  </div>
+}
