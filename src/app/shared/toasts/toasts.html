@@ -1,1 +1,21 @@
-<p>toasts works!</p>
+<div class="fixed bottom-5 right-5 z-[80] flex w-[min(380px,calc(100vw-2.5rem))] flex-col gap-2" aria-live="polite">
+  @for (t of toasts.toasts(); track t.id) {
+    <div role="status" class="toast-card relative overflow-hidden rounded-xl border border-ink-700 bg-ink-850/95 px-4 py-3 shadow-pop backdrop-blur animate-toast-in">
+      <div class="flex items-start gap-3">
+        <app-icon [name]="icon(t.kind)" class="mt-0.5 text-base" [class]="text(t.kind)" />
+        <p class="flex-1 text-sm leading-snug text-paper-100">{{ t.message }}</p>
+        @if (t.action) {
+          <button type="button" (click)="toasts.runAction(t)"
+                  class="shrink-0 text-sm font-semibold text-amber-300 hover:text-amber-400 hover:underline">
+            {{ t.action.label }}
+          </button>
+        }
+        <button type="button" (click)="toasts.dismiss(t.id)" aria-label="Dismiss notification"
+                class="icon-btn -mr-1 -mt-1 size-7 text-ink-400 hover:bg-ink-800 hover:text-paper-100">
+          <app-icon name="x" class="text-sm" />
+        </button>
+      </div>
+      <span class="toast-progress absolute bottom-0 left-0 h-0.5" [class]="bar(t.kind)" [style.--life]="t.life + 'ms'"></span>
+    </div>
+  }
+</div>
