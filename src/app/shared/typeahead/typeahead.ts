@@ -14,7 +14,7 @@ import { Icon } from '../icon/icon';
   selector: 'app-typeahead',
   imports: [Icon],
   templateUrl: './typeahead.html',
-  styleUrl: './typeahead.css',
+  styleUrl: './typeahead.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   host: { '(document:click)': 'onDocClick($event)' },
 })

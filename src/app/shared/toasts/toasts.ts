@@ -14,7 +14,7 @@ const KIND_BAR: Record<ToastKind, string> = {
   selector: 'app-toasts',
   imports: [Icon],
   templateUrl: './toasts.html',
-  styleUrl: './toasts.css',
+  styleUrl: './toasts.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Toasts {

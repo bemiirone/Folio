@@ -1,1 +1,89 @@
-<p>field-input works!</p>
+<div>
+  @if (def().type !== 'toggle') {
+    <label [for]="fid" class="label-mono mb-1.5 block" [class.label-paper]="paper()">
+      {{ def().label }}
+      @if (def().required) { <span class="text-amber-500" aria-hidden="true">*</span> }
+    </label>
+  }
+
+  @switch (def().type) {
+    @case ('text') @case ('email') {
+      <input [id]="fid" [type]="def().type" [formControl]="control()" class="input-desk"
+             [class.input-paper]="paper()" [class.border-vermil-500]="showError()"
+             [placeholder]="def().placeholder ?? ''" [attr.aria-invalid]="showError()" [attr.aria-describedby]="fid + '-err'"
+             autocomplete="off" />
+    }
+    @case ('textarea') {
+      <textarea [id]="fid" rows="4" [formControl]="control()" class="input-desk h-auto resize-y py-2.5"
+                [class.input-paper]="paper()" [class.border-vermil-500]="showError()"
+                [placeholder]="def().placeholder ?? ''" [attr.aria-invalid]="showError()" [attr.aria-describedby]="fid + '-err'"></textarea>
+    }
+    @case ('number') {
+      <input [id]="fid" type="number" step="any" inputmode="decimal" [formControl]="control()" class="input-desk"
+             [class.input-paper]="paper()" [class.border-vermil-500]="showError()"
+             [placeholder]="def().placeholder ?? ''" [attr.min]="def().min ?? null" [attr.max]="def().max ?? null"
+             [attr.aria-invalid]="showError()" [attr.aria-describedby]="fid + '-err'" />
+    }
+    @case ('date') {
+      <input [id]="fid" type="date" [formControl]="control()" class="input-desk"
+             [class.input-paper]="paper()" [class.border-vermil-500]="showError()"
+             [attr.aria-invalid]="showError()" [attr.aria-describedby]="fid + '-err'" />
+    }
+    @case ('select') {
+      <div class="relative">
+        <select [id]="fid" [formControl]="control()" class="input-desk appearance-none pr-9"
+                [class.input-paper]="paper()" [class.border-vermil-500]="showError()"
+                [attr.aria-invalid]="showError()" [attr.aria-describedby]="fid + '-err'">
+          <option value="" [disabled]="def().required">Choose…</option>
+          @for (opt of def().options ?? []; track opt) { <option [value]="opt">{{ opt }}</option> }
+        </select>
+        <app-icon name="chevron-down" class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-sm"
+                  [class.text-ink-400]="!paper()" [class.text-paper-700]="paper()" />
+      </div>
+    }
+    @case ('toggle') {
+      <div class="flex items-center gap-3">
+        <button type="button" role="switch" [attr.aria-checked]="control().value === true" [attr.aria-label]="def().label"
+                (click)="flip()"
+                class="relative h-6 w-11 shrink-0 rounded-full border transition-colors duration-200"
+                [class.bg-viridian-500]="control().value === true" [class.border-viridian-400]="control().value === true"
+                [class.bg-ink-700]="control().value !== true && !paper()" [class.border-ink-600]="control().value !== true && !paper()"
+                [class.bg-paper-300]="control().value !== true && paper()" [class.border-paper-300]="control().value !== true && paper()">
+          <span class="absolute left-0.5 top-0.5 size-[18px] rounded-full bg-paper-50 shadow transition-transform duration-200"
+                [class.translate-x-5]="control().value === true"></span>
+        </button>
+        <span class="label-mono" [class.label-paper]="paper()">{{ def().label }}</span>
+        <span class="font-mono text-xs" [class.text-viridian-500]="control().value === true"
+              [class.text-ink-400]="control().value !== true && !paper()" [class.text-paper-700]="control().value !== true && paper()">
+          {{ control().value === true ? 'ON' : 'OFF' }}
+        </span>
+      </div>
+    }
+    @case ('tags') {
+      <div class="input-desk flex h-auto min-h-10 flex-wrap items-center gap-1.5 py-1.5"
+           [class]="(paper() ? 'input-paper focus-within:border-amber-500' : 'focus-within:border-amber-400/70') + (showError() ? ' border-vermil-500' : '')">
+        @for (tag of tagsValue(); track tag) {
+          <span class="inline-flex items-center gap-1 rounded-md px-2 py-0.5 font-mono text-xs"
+                [class.bg-ink-700]="!paper()" [class.text-paper-100]="!paper()"
+                [class.bg-paper-200]="paper()" [class.text-paper-900]="paper()">
+            #{{ tag }}
+            <button type="button" (click)="removeTag(tag)" [attr.aria-label]="'Remove tag ' + tag"
+                    class="opacity-60 hover:opacity-100"><app-icon name="x" class="text-[10px]" /></button>
+          </span>
+        }
+        <input [id]="fid" type="text" [value]="draft()" (input)="onDraft($event)" (keydown)="onTagKey($event)"
+               (blur)="commitTag()"
+               class="min-w-24 flex-1 bg-transparent text-sm outline-none"
+               [class]="paper() ? 'text-paper-900 placeholder:text-paper-700/50' : 'text-paper-100 placeholder:text-ink-400'"
+               [placeholder]="tagsValue().length ? '' : (def().placeholder ?? 'Type a tag, press Enter')"
+               [attr.aria-describedby]="fid + '-err'" autocomplete="off" />
+      </div>
+    }
+  }
+
+  @if (errorText(); as err) {
+    <p [id]="fid + '-err'" class="mt-1 text-xs font-medium" [class.text-vermil-600]="paper()" [class.text-vermil-400]="!paper()">
+      {{ err }}
+    </p>
+  }
+</div>
