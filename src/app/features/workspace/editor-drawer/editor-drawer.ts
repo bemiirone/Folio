@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy, Component, DestroyRef, ElementRef, OnInit, afterNextRender,
   inject, input, output, signal, viewChild,
 } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Collection, DocRecord, FieldDef } from '../../../core/models';
 import { buildValuesGroup } from '../../../core/dynamic-form';
@@ -38,9 +39,10 @@ export class EditorDrawer implements OnInit {
   protected tagsDef: FieldDef = { id: 'doc-tags', key: 'tags', label: 'Tags', type: 'tags', required: false, placeholder: 'birds, dawn, water…' };
 
   constructor() {
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    inject(DestroyRef).onDestroy(() => { document.body.style.overflow = prevOverflow; });
+    const body = inject(DOCUMENT).body;
+    const prevOverflow = body.style.overflow;
+    body.style.overflow = 'hidden';
+    inject(DestroyRef).onDestroy(() => { body.style.overflow = prevOverflow; });
     afterNextRender(() => this.titleInput()?.nativeElement.focus());
   }
 
