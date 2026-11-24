@@ -1,1 +1,92 @@
-<p>editor-drawer works!</p>
+<div class="fixed inset-0 z-50">
+  <div class="absolute inset-0 bg-ink-950/70 backdrop-blur-[2px] animate-scrim-in" (click)="attemptClose()" aria-hidden="true"></div>
+
+  <section role="dialog" aria-modal="true" [attr.aria-label]="doc() ? 'Edit document' : 'New document'"
+           class="paper-sheet absolute right-0 top-0 flex h-full w-full max-w-[600px] flex-col shadow-drawer animate-drawer-in">
+    <!-- washi tape -->
+    <span class="tape absolute -top-0 left-1/2 z-10 h-6 w-28 -translate-x-1/2 -translate-y-1/3 rotate-[-2deg] rounded-sm shadow-md" aria-hidden="true"></span>
+
+    <header class="px-7 pt-8">
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-2 rounded-full border border-paper-300 bg-paper-50 px-3 py-1 font-mono text-[11px] uppercase tracking-wider text-paper-700">
+          <span class="size-2 rounded-full" [style.background]="collection().color"></span>
+          {{ collection().emoji }} {{ collection().name }}
+        </span>
+        <span class="flex-1"></span>
+        @if (formSig(); as f) {
+          <button type="button" (click)="flipStar(f)" [attr.aria-pressed]="f.get('starred')!.value"
+                  aria-label="Star this document (saved with it)"
+                  class="icon-btn size-9 transition-transform active:scale-90"
+                  [class.text-amber-500]="f.get('starred')!.value" [class.text-paper-400]="!f.get('starred')!.value"
+                  [class.hover:text-amber-600]="!f.get('starred')!.value">
+            <app-icon name="star" [filled]="f.get('starred')!.value" class="text-lg" />
+          </button>
+        }
+        <button type="button" (click)="attemptClose()" aria-label="Close editor"
+                class="icon-btn size-9 text-paper-700 hover:bg-paper-200 hover:text-paper-900">
+          <app-icon name="x" class="text-lg" />
+        </button>
+      </div>
+      <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-paper-700">
+        @if (doc(); as d) {
+          Filed {{ fullDate(d.createdAt) }} · updated {{ timeAgo(d.updatedAt) }} · id {{ d.id.slice(0, 8) }}
+        } @else {
+          New document · {{ collection().schema.length }} schema fields
+        }
+      </p>
+    </header>
+
+    @if (formSig(); as f) {
+      <form [formGroup]="f" (ngSubmit)="save()" (keydown.enter)="onEnter($event)" class="scroll-paper flex-1 overflow-y-auto px-7 py-5">
+        <label for="doc-title" class="label-mono label-paper mb-1 block">Title <span class="text-amber-500">*</span></label>
+        <input #titleInput id="doc-title" type="text" formControlName="title" class="ruled-title"
+               placeholder="Give it a name worth filing…" maxlength="160" autocomplete="off" />
+        @if (titleError(f)) {
+          <p class="mt-1 text-xs font-medium text-vermil-600">{{ titleError(f) }}</p>
+        }
+
+        @if (collection().schema.length) {
+          <div class="mt-6">
+            <app-dynamic-form [defs]="collection().schema" [group]="valuesGroup(f)" tone="paper" />
+          </div>
+        } @else {
+          <p class="mt-6 rounded-lg border border-dashed border-paper-300 bg-paper-50/60 px-4 py-3 text-sm text-paper-700">
+            This collection has no schema fields yet — title and tags will still be saved.
+            Design fields in the <span class="font-semibold">Schema studio</span> tab.
+          </p>
+        }
+
+        <div class="mt-6">
+          <app-field-input [def]="tagsDef" [control]="asFc(f, 'tags')" tone="paper" />
+        </div>
+        <div class="h-4"></div>
+      </form>
+
+      <footer class="border-t border-paper-300/70 bg-paper-100/85 px-7 py-4 backdrop-blur">
+        @if (confirmDiscard()) {
+          <div class="flex items-center gap-3 animate-pop">
+            <app-icon name="alert" class="text-lg text-amber-600" />
+            <p class="flex-1 text-sm font-medium text-paper-900">Discard unsaved changes?</p>
+            <button type="button" class="btn btn-paper-ghost h-9" (click)="confirmDiscard.set(false)">Keep editing</button>
+            <button type="button" class="btn btn-paper-danger h-9" (click)="closed.emit()">Discard</button>
+          </div>
+        } @else {
+          <div class="flex items-center gap-3">
+            @if (doc(); as d) {
+              <button type="button" class="btn btn-paper-danger h-9" (click)="deleteDoc(d)" [disabled]="saving()">
+                <app-icon name="trash" class="text-sm" /> Delete
+              </button>
+            }
+            <span class="flex-1"></span>
+            <span class="hidden font-mono text-[10px] text-paper-700 sm:inline">⌘/Ctrl ↵ to save</span>
+            <button type="button" class="btn btn-paper-ghost" (click)="attemptClose()" [disabled]="saving()">Cancel</button>
+            <button type="button" class="btn btn-primary min-w-28" (click)="save()" [disabled]="saving()">
+              @if (saving()) { <app-icon name="loader" class="animate-spin text-sm" /> Saving… }
+              @else { <app-icon name="save" class="text-sm" /> {{ doc() ? 'Save changes' : 'File document' }} }
+            </button>
+          </div>
+        }
+      </footer>
+    }
+  </section>
+</div>
