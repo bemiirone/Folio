@@ -1,1 +1,137 @@
-<p>documents-panel works!</p>
+<div class="relative">
+  <!-- toolbar -->
+  <div class="flex flex-wrap items-center gap-3">
+    <span class="label-mono">{{ store.count() }} document{{ store.count() === 1 ? '' : 's' }}</span>
+    <div class="ml-auto flex flex-wrap items-center gap-2">
+      <div class="relative">
+        <app-icon name="search" class="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2 text-sm text-ink-400" />
+        <input type="text" class="input-desk h-9 w-52 pl-8 pr-7 text-[13px]" [value]="qInput()"
+               (input)="onQuery($event)" [placeholder]="'Filter in ' + collection().name + '…'"
+               aria-label="Filter documents in this collection" autocomplete="off" />
+        @if (qInput()) {
+          <button type="button" (click)="clearQuery()" aria-label="Clear filter"
+                  class="icon-btn absolute right-1 top-1/2 size-6 -translate-y-1/2 text-ink-400 hover:text-paper-100">
+            <app-icon name="x" class="text-xs" />
+          </button>
+        }
+      </div>
+      <div class="relative">
+        <select class="input-desk h-9 w-44 appearance-none pr-8 text-[13px]" [value]="store.sort()"
+                (change)="onSort($event)" aria-label="Sort documents">
+          <option value="updated_desc">Recently updated</option>
+          <option value="updated_asc">Oldest updated</option>
+          <option value="title_asc">Title A–Z</option>
+          <option value="created_desc">Recently filed</option>
+        </select>
+        <app-icon name="chevron-down" class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 text-sm text-ink-400" />
+      </div>
+    </div>
+  </div>
+
+  <!-- filter chips (the saved view for this collection) -->
+  <div class="mt-3 flex flex-wrap items-center gap-2">
+    <button type="button" class="chip" [class.chip-on]="store.filter() === 'all' && !store.tag()"
+            (click)="store.setFilters({ filter: 'all', tag: null })">All</button>
+    <button type="button" class="chip" [class.chip-on]="store.filter() === 'starred'"
+            (click)="store.setFilters({ filter: store.filter() === 'starred' ? 'all' : 'starred' })">
+      <app-icon name="star" [filled]="store.filter() === 'starred'" class="text-xs" /> Starred
+    </button>
+    @for (t of store.topTags(); track t.tag) {
+      <button type="button" class="chip font-mono" [class.chip-on]="store.tag() === t.tag"
+              (click)="store.setFilters({ tag: store.tag() === t.tag ? null : t.tag })">
+        #{{ t.tag }} <span class="opacity-60">{{ t.n }}</span>
+      </button>
+    }
+    @if (store.q() || store.tag() || store.filter() !== 'all') {
+      <button type="button" class="chip border-dashed text-ink-400" (click)="clearAllFilters()">
+        <app-icon name="x" class="text-xs" /> Clear
+      </button>
+    }
+  </div>
+
+  @if (store.loading() && store.count() > 0) { <div class="loadbar mt-3" aria-hidden="true"></div> }
+
+  <!-- error -->
+  @if (store.error() && health.state() !== 'offline') {
+    <div class="mt-5 flex items-center gap-3 rounded-xl border border-vermil-500/40 bg-vermil-500/10 px-4 py-3 animate-fade-up">
+      <app-icon name="alert" class="text-lg text-vermil-400" />
+      <p class="flex-1 text-sm text-vermil-400">{{ store.error() }}</p>
+      <button type="button" class="btn btn-danger h-8" (click)="retry()">Retry</button>
+    </div>
+  }
+
+  <!-- grid -->
+  @if (store.loading() && store.count() === 0) {
+    <div class="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+      @for (i of [1, 2, 3, 4, 5, 6]; track i) {
+        <div class="rounded-xl border border-ink-700/50 bg-ink-850 p-4" [style.--i]="i">
+          <div class="skeleton h-5 w-3/4"></div>
+          <div class="skeleton mt-2 h-2.5 w-1/3"></div>
+          <div class="skeleton mt-4 h-3 w-full"></div>
+          <div class="skeleton mt-2 h-3 w-2/3"></div>
+          <div class="mt-4 flex gap-2"><div class="skeleton h-5 w-14"></div><div class="skeleton h-5 w-14"></div></div>
+        </div>
+      }
+    </div>
+  } @else if (store.count() > 0) {
+    <div class="mt-5 grid grid-cols-1 gap-4 transition-opacity sm:grid-cols-2 xl:grid-cols-3"
+         [class.opacity-60]="store.loading()" [class.pointer-events-none]="store.loading()">
+      @for (doc of store.entities(); track doc.id; let i = $index, odd = $odd) {
+        <div class="group fade-up transition-transform duration-200 hover:rotate-0"
+             [class]="odd ? 'rotate-[0.4deg]' : 'rotate-[-0.35deg]'" [style.--i]="i % 9">
+          <app-document-card [doc]="doc" [schema]="collection().schema" [color]="collection().color"
+                             [selected]="isSelected(doc.id)" [anySelection]="store.selectedCount() > 0"
+                             (open)="openDoc.emit($event)" (star)="store.toggleStar($event)"
+                             (duplicate)="store.duplicate($event)" (remove)="store.remove($event)"
+                             (select)="store.toggleSelect($event)" />
+        </div>
+      }
+    </div>
+  } @else if (!store.loading() && !store.error()) {
+    @if (store.q() || store.tag() || store.filter() !== 'all') {
+      <div class="mt-12 flex flex-col items-center text-center animate-fade-up">
+        <app-icon name="search" class="text-4xl text-ink-500" />
+        <h3 class="mt-3 font-display text-xl text-paper-100">Nothing matches that view</h3>
+        <p class="mt-1 max-w-sm text-sm text-ink-400">
+          @if (store.q()) { No documents match “<span class="font-mono">{{ store.q() }}</span>” with the current filters. }
+          @else { The current filters hide everything in this collection. }
+        </p>
+        <button type="button" class="btn btn-ghost mt-4" (click)="clearAllFilters()">
+          <app-icon name="x" class="text-sm" /> Clear filters
+        </button>
+      </div>
+    } @else {
+      <div class="card-paper mx-auto mt-10 max-w-md p-8 text-center animate-pop" style="--i: 1">
+        <app-icon name="feather" class="text-5xl text-amber-600" />
+        <h3 class="mt-3 font-display text-2xl font-semibold text-paper-900">Nothing filed yet</h3>
+        <p class="mt-2 text-sm leading-relaxed text-paper-700">
+          Every {{ collection().name }} document starts as a blank card shaped by your
+          {{ collection().schema.length }}-field schema. File the first one.
+        </p>
+        <button type="button" class="btn btn-primary mt-5" (click)="newDoc.emit()">
+          <app-icon name="plus" class="text-sm" /> File a document
+        </button>
+      </div>
+    }
+  }
+
+  <!-- bulk action bar -->
+  @if (store.selectedCount() > 0) {
+    <div class="fixed bottom-6 left-1/2 z-40 flex h-12 -translate-x-1/2 items-center gap-3 rounded-full border border-ink-600 bg-ink-800/95 px-5 shadow-pop backdrop-blur animate-pop">
+      <span class="font-mono text-xs font-medium text-amber-300">{{ store.selectedCount() }} selected</span>
+      <span class="h-4 w-px bg-ink-600" aria-hidden="true"></span>
+      @if (!store.allSelected()) {
+        <button type="button" class="text-xs font-medium text-ink-300 hover:text-paper-100" (click)="store.selectAllVisible()">
+          Select all {{ store.count() }}
+        </button>
+      }
+      <button type="button" class="btn btn-danger h-8 px-3 text-xs" (click)="store.bulkRemove(store.selectedIds())">
+        <app-icon name="trash" class="text-sm" /> Delete
+      </button>
+      <button type="button" (click)="store.clearSelection()" aria-label="Clear selection"
+              class="icon-btn size-7 text-ink-400 hover:bg-ink-700 hover:text-paper-100">
+        <app-icon name="x" class="text-sm" />
+      </button>
+    </div>
+  }
+</div>
