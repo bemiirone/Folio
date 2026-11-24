@@ -1,1 +1,164 @@
-<p>schema-studio works!</p>
+<div class="grid gap-6 lg:grid-cols-[1fr_420px]">
+  <!-- builder -->
+  <section class="rounded-2xl border border-ink-800 bg-ink-900/60 p-5 animate-fade-up" aria-label="Schema builder">
+    <div class="flex flex-wrap items-center gap-3">
+      <app-icon name="sliders" class="text-lg text-amber-400" />
+      <h2 class="font-display text-xl text-paper-50">Schema</h2>
+      <span class="label-mono">{{ rows.length }} fields</span>
+      @if (dirty()) {
+        <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-amber-300">
+          <span class="size-1.5 rounded-full bg-amber-400 animate-pulse-dot"></span> unsaved changes
+        </span>
+      }
+    </div>
+
+    <div class="mt-4 flex flex-wrap gap-2" role="group" aria-label="Quick add field">
+      @for (t of fieldTypes; track t.value) {
+        <button type="button" class="chip" (click)="addField(t.value)">
+          <app-icon name="plus" class="text-xs" /> {{ t.label }}
+        </button>
+      }
+    </div>
+
+    @if (rows.errors?.['duplicateKeys']; as dupes) {
+      <p class="mt-4 rounded-lg border border-vermil-500/40 bg-vermil-500/10 px-3 py-2 text-xs font-medium text-vermil-400">
+        Duplicate keys must be unique: {{ dupes.join(', ') }}
+      </p>
+    }
+
+    <form [formGroup]="form" class="mt-4 space-y-3">
+      <div formArrayName="fields" class="space-y-3">
+        @for (row of rows.controls; track $index; let i = $index) {
+          <div [formGroupName]="i"
+               (dragover)="onDragOver($event, i)" (drop)="onDrop(i)"
+               class="rounded-xl border bg-ink-850/80 p-3.5 transition-all"
+               [class.border-amber-400]="overIdx() === i && dragIdx() !== null && dragIdx() !== i"
+               [class.border-dashed]="overIdx() === i && dragIdx() !== null && dragIdx() !== i"
+               [class.border-ink-700]="!(overIdx() === i && dragIdx() !== null && dragIdx() !== i)"
+               [class.opacity-50]="dragIdx() === i">
+            <div class="flex items-center gap-2">
+              <button type="button" draggable="true" (dragstart)="onDragStart($event, i)" (dragend)="endDrag()"
+                      aria-label="Drag to reorder field" class="icon-btn size-7 cursor-grab text-ink-500 hover:text-paper-100 active:cursor-grabbing">
+                <app-icon name="grip" class="text-base" />
+              </button>
+              <input type="text" formControlName="label" (input)="onLabelInput(row)"
+                     [attr.data-row-label]="row.get('id')!.value"
+                     class="input-desk h-9 min-w-0 flex-1 text-[13px] font-medium" placeholder="Field label…"
+                     [class.border-vermil-500]="row.get('label')!.invalid && row.get('label')!.touched"
+                     [attr.aria-label]="'Label for field ' + (i + 1)" />
+              <div class="relative w-36 shrink-0">
+                <select formControlName="type" class="input-desk h-9 appearance-none pr-7 text-[13px]" [attr.aria-label]="'Type for field ' + (i + 1)">
+                  @for (t of fieldTypes; track t.value) { <option [value]="t.value">{{ t.label }}</option> }
+                </select>
+                <app-icon name="chevron-down" class="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-xs text-ink-400" />
+              </div>
+              <button type="button" role="switch" [attr.aria-checked]="row.get('required')!.value" (click)="flipRequired(row)"
+                      aria-label="Required field" title="Required"
+                      class="relative h-5 w-9 shrink-0 rounded-full border transition-colors"
+                      [class.bg-vermil-500]="row.get('required')!.value" [class.border-vermil-400]="row.get('required')!.value"
+                      [class.bg-ink-700]="!row.get('required')!.value" [class.border-ink-600]="!row.get('required')!.value">
+                <span class="absolute left-0.5 top-0.5 size-3.5 rounded-full bg-paper-50 transition-transform"
+                      [class.translate-x-4]="row.get('required')!.value"></span>
+              </button>
+              <div class="flex shrink-0">
+                <button type="button" (click)="move(i, i - 1)" [disabled]="i === 0" aria-label="Move field up"
+                        class="icon-btn size-7 text-ink-400 hover:text-paper-100 disabled:opacity-30"><app-icon name="arrow-up" class="text-sm" /></button>
+                <button type="button" (click)="move(i, i + 1)" [disabled]="i === rows.length - 1" aria-label="Move field down"
+                        class="icon-btn size-7 text-ink-400 hover:text-paper-100 disabled:opacity-30"><app-icon name="arrow-down" class="text-sm" /></button>
+                <button type="button" (click)="removeField(i)" aria-label="Remove field"
+                        class="icon-btn size-7 text-vermil-400 hover:bg-vermil-500/15"><app-icon name="trash" class="text-sm" /></button>
+              </div>
+            </div>
+
+            <div class="mt-2.5 flex flex-wrap items-start gap-2 pl-9">
+              <div class="w-44">
+                <input type="text" formControlName="key" (input)="onKeyInput(row)" spellcheck="false"
+                       class="input-desk h-8 font-mono text-xs" placeholder="key"
+                       [class.border-vermil-500]="row.get('key')!.invalid && (row.get('key')!.touched || row.get('key')!.dirty)"
+                       [attr.aria-label]="'Storage key for field ' + (i + 1)" />
+                @if (row.get('key')!.invalid && (row.get('key')!.touched || row.get('key')!.dirty)) {
+                  <p class="mt-1 text-[11px] font-medium text-vermil-400">lowercase, a–z 0–9 _</p>
+                }
+              </div>
+              @if (row.get('type')!.value === 'select') {
+                <div class="min-w-52 flex-1">
+                  <input type="text" formControlName="optionsText" class="input-desk h-8 text-xs"
+                         placeholder="Options, comma separated"
+                         [class.border-vermil-500]="row.hasError('optionsRequired') && row.get('optionsText')!.touched"
+                         [attr.aria-label]="'Options for field ' + (i + 1)" />
+                  @if (row.hasError('optionsRequired') && row.get('optionsText')!.touched) {
+                    <p class="mt-1 text-[11px] font-medium text-vermil-400">A select needs at least two options.</p>
+                  }
+                </div>
+              }
+              @if (row.get('type')!.value === 'number') {
+                <input type="number" formControlName="min" class="input-desk h-8 w-24 text-xs" placeholder="Min" aria-label="Minimum" />
+                <input type="number" formControlName="max" class="input-desk h-8 w-24 text-xs" placeholder="Max" aria-label="Maximum" />
+              }
+              @if (hasPlaceholder(row)) {
+                <input type="text" formControlName="placeholder" class="input-desk h-8 min-w-40 flex-1 text-xs"
+                       placeholder="Placeholder (optional)" [attr.aria-label]="'Placeholder for field ' + (i + 1)" />
+              }
+              @if (row.get('required')!.value) {
+                <span class="mt-1 font-mono text-[10px] uppercase tracking-wider text-vermil-400">required</span>
+              }
+            </div>
+          </div>
+        } @empty {
+          <div class="rounded-xl border border-dashed border-ink-600 px-4 py-8 text-center">
+            <app-icon name="sparkles" class="text-2xl text-amber-400" />
+            <p class="mt-2 text-sm text-ink-300">No fields yet — use the quick-add chips above.</p>
+            <p class="mt-1 font-mono text-[11px] text-ink-500">Every field becomes a live control in the document form.</p>
+          </div>
+        }
+      </div>
+    </form>
+
+    <div class="mt-5 flex flex-wrap items-center gap-3 border-t border-ink-800 pt-4">
+      <p class="flex-1 text-xs leading-relaxed text-ink-400">
+        Removing a field hides it from forms; stored values are kept, so re-adding the same key brings the data back.
+      </p>
+      <button type="button" class="btn btn-ghost h-9" (click)="revert()" [disabled]="!dirty() || saving()">Revert</button>
+      <button type="button" class="btn btn-primary h-9 min-w-32" (click)="saveSchema()" [disabled]="!dirty() || saving()">
+        @if (saving()) { <app-icon name="loader" class="animate-spin text-sm" /> Saving… }
+        @else { <app-icon name="save" class="text-sm" /> Save schema }
+      </button>
+    </div>
+  </section>
+
+  <!-- live preview -->
+  <aside class="lg:sticky lg:top-[calc(var(--header-h)+1.5rem)] lg:self-start">
+    <div class="card-paper scroll-paper max-h-[calc(100vh-var(--header-h)-3rem)] overflow-y-auto p-6 animate-fade-up" style="--i: 2">
+      <div class="flex items-center gap-2">
+        <span class="size-2 rounded-full bg-viridian-500 animate-pulse-dot"></span>
+        <span class="label-mono label-paper">Live preview</span>
+        <span class="ml-auto font-mono text-[11px] text-paper-700">{{ collection().emoji }} {{ collection().name }}</span>
+      </div>
+      <h3 class="mt-2 font-display text-2xl font-semibold text-paper-900">Your document form</h3>
+      <p class="mt-1 text-xs text-paper-700">Rebuilds on every keystroke in the builder. Values here are never saved.</p>
+
+      @if (previewSig(); as pg) {
+        @if (defs().length) {
+          <div class="mt-5">
+            <app-dynamic-form [defs]="defs()" [group]="pg" tone="paper" />
+          </div>
+          <div class="mt-6 flex items-center gap-3 border-t border-paper-300/70 pt-4">
+            <button type="button" class="btn btn-paper-ghost h-9" (click)="resetPreview()">Reset preview</button>
+            <span class="flex-1"></span>
+            <button type="button" class="btn btn-primary h-9" (click)="fileDocument.emit()" [disabled]="dirty()">
+              File a document <app-icon name="chevron-right" class="text-sm" />
+            </button>
+          </div>
+          @if (dirty()) {
+            <p class="mt-2 text-right font-mono text-[10px] text-paper-700">Save the schema to file documents against it.</p>
+          }
+        } @else {
+          <div class="mt-6 rounded-lg border border-dashed border-paper-300 px-4 py-8 text-center">
+            <app-icon name="feather" class="text-3xl text-paper-400" />
+            <p class="mt-2 text-sm text-paper-700">Add a field to see your form take shape.</p>
+          </div>
+        }
+      }
+    </div>
+  </aside>
+</div>
