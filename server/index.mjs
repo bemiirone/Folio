@@ -119,7 +119,7 @@ app.post('/api/collections', (req, res) => {
   const col = {
     id: randomUUID(), name: name.slice(0, 60),
     description: String(req.body?.description ?? '').slice(0, 200),
-    emoji: String(req.body?.emoji ?? '🗂️').slice(0, 8),
+    icon: req.body?.icon ?? 'folder',
     color: /^#[0-9a-fA-F]{6}$/.test(req.body?.color ?? '') ? req.body.color : PALETTE[db.data.collections.length % PALETTE.length],
     schema: sanitizeSchema(req.body?.schema ?? []) ?? [],
     createdAt: now(), updatedAt: now(),
@@ -139,7 +139,7 @@ app.patch('/api/collections/:id', (req, res) => {
     col.name = name.slice(0, 60);
   }
   if (b.description !== undefined) col.description = String(b.description).slice(0, 200);
-  if (b.emoji !== undefined) col.emoji = String(b.emoji).slice(0, 8);
+  if (b.icon !== undefined) col.icon = b.icon;
   if (b.color !== undefined && /^#[0-9a-fA-F]{6}$/.test(b.color)) col.color = b.color;
   if (b.schema !== undefined) {
     const schema = sanitizeSchema(b.schema);
@@ -268,12 +268,12 @@ app.get('/api/search', (req, res) => {
   const limit = Math.min(20, Math.max(1, Number(req.query['limit']) || 8));
   const meta = (d) => {
     const c = findCollection(d.collectionId);
-    return { collectionId: d.collectionId, collectionName: c?.name ?? 'Unknown', emoji: c?.emoji ?? '🗂️', color: c?.color ?? '#5B8CFF', schema: c?.schema ?? [] };
+    return { collectionId: d.collectionId, collectionName: c?.name ?? 'Unknown', icon: c?.icon ?? 'folder', color: c?.color ?? '#5B8CFF', schema: c?.schema ?? [] };
   };
   const recent = (d) => {
     const m = meta(d);
     const first = m.schema.map((f) => flatValue(d.values[f.key])).find((v) => v.trim()) ?? d.tags.join(', ');
-    return { doc: d, collectionId: m.collectionId, collectionName: m.collectionName, emoji: m.emoji, color: m.color, snippet: first.slice(0, 110), matchField: 'Recent' };
+    return { doc: d, collectionId: m.collectionId, collectionName: m.collectionName, icon: m.icon, color: m.color, snippet: first.slice(0, 110), matchField: 'Recent' };
   };
 
   if (!q) {
@@ -300,7 +300,7 @@ app.get('/api/search', (req, res) => {
     const idx = source.toLowerCase().indexOf(q);
     const start = Math.max(0, idx - 32);
     const snippet = (start > 0 ? '…' : '') + source.slice(start, idx + q.length + 64) + (idx + q.length + 64 < source.length ? '…' : '');
-    hits.push({ doc: d, collectionId: m.collectionId, collectionName: m.collectionName, emoji: m.emoji, color: m.color, snippet, matchField });
+    hits.push({ doc: d, collectionId: m.collectionId, collectionName: m.collectionName, icon: m.icon, color: m.color, snippet, matchField });
     if (hits.length >= limit) break;
   }
   res.json(hits);

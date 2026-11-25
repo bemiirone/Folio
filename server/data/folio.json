@@ -1,16 +1,16 @@
 {
   "collections": [
     {
-      "id": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "name": "Field Notes",
-      "emoji": "🧭",
+      "icon": "map",
       "color": "#23C48E",
       "description": "Observations from the ridge, the millpond and the long way home.",
-      "createdAt": "2026-10-16T10:19:34.142Z",
-      "updatedAt": "2026-11-25T14:39:44.292Z",
+      "createdAt": "2026-10-16T15:51:06.995Z",
+      "updatedAt": "2026-11-25T12:51:06.995Z",
       "schema": [
         {
-          "id": "c47dcddb",
+          "id": "aa62e00e",
           "key": "location",
           "label": "Location",
           "type": "text",
@@ -18,14 +18,14 @@
           "placeholder": "Where were you?"
         },
         {
-          "id": "3b81ec7e",
+          "id": "411e06b9",
           "key": "observed_on",
           "label": "Observed on",
           "type": "date",
           "required": false
         },
         {
-          "id": "fbbfa268",
+          "id": "4904e09a",
           "key": "conditions",
           "label": "Conditions",
           "type": "select",
@@ -39,7 +39,7 @@
           ]
         },
         {
-          "id": "903e6f1e",
+          "id": "56690b35",
           "key": "elevation_m",
           "label": "Elevation (m)",
           "type": "number",
@@ -48,7 +48,7 @@
           "max": 9000
         },
         {
-          "id": "a4fba77b",
+          "id": "eb260d61",
           "key": "notes",
           "label": "Notes",
           "type": "textarea",
@@ -58,23 +58,23 @@
       ]
     },
     {
-      "id": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "name": "Reading Queue",
-      "emoji": "📚",
+      "icon": "book-open",
       "color": "#5B8CFF",
       "description": "Books queued, underway and finished — with honest little reviews.",
-      "createdAt": "2026-09-26T10:19:34.143Z",
-      "updatedAt": "2026-11-25T03:19:34.143Z",
+      "createdAt": "2026-09-26T15:51:06.995Z",
+      "updatedAt": "2026-11-25T08:51:06.995Z",
       "schema": [
         {
-          "id": "88aa11b6",
+          "id": "7d7b6915",
           "key": "author",
           "label": "Author",
           "type": "text",
           "required": true
         },
         {
-          "id": "2a5f2189",
+          "id": "32755989",
           "key": "pages",
           "label": "Pages",
           "type": "number",
@@ -83,7 +83,7 @@
           "max": 20000
         },
         {
-          "id": "2f69ecb5",
+          "id": "1928ba16",
           "key": "status",
           "label": "Status",
           "type": "select",
@@ -96,7 +96,7 @@
           ]
         },
         {
-          "id": "62a503bd",
+          "id": "0cdde52f",
           "key": "rating",
           "label": "Rating (1–5)",
           "type": "number",
@@ -105,7 +105,7 @@
           "max": 5
         },
         {
-          "id": "50908287",
+          "id": "fb0ad0ab",
           "key": "review",
           "label": "Review",
           "type": "textarea",
@@ -114,16 +114,16 @@
       ]
     },
     {
-      "id": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "id": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "name": "Kitchen Ledger",
-      "emoji": "🍳",
+      "icon": "wrench",
       "color": "#FFB224",
       "description": "Recipes that earned a permanent card in the box.",
-      "createdAt": "2026-08-27T10:19:34.143Z",
-      "updatedAt": "2026-11-25T11:17:09.608Z",
+      "createdAt": "2026-08-27T15:51:06.995Z",
+      "updatedAt": "2026-11-24T13:51:06.995Z",
       "schema": [
         {
-          "id": "a9f21410",
+          "id": "f5a79498",
           "key": "servings",
           "label": "Servings",
           "type": "number",
@@ -132,7 +132,7 @@
           "max": 40
         },
         {
-          "id": "aadd703f",
+          "id": "16be59e4",
           "key": "prep_min",
           "label": "Prep (minutes)",
           "type": "number",
@@ -141,7 +141,7 @@
           "max": 2880
         },
         {
-          "id": "0140fcf2",
+          "id": "0cca4457",
           "key": "difficulty",
           "label": "Difficulty",
           "type": "select",
@@ -153,14 +153,14 @@
           ]
         },
         {
-          "id": "808fc384",
+          "id": "5092b711",
           "key": "ingredients",
           "label": "Ingredients",
           "type": "tags",
           "required": false
         },
         {
-          "id": "f3f1c21d",
+          "id": "f05c6f42",
           "key": "method",
           "label": "Method",
           "type": "textarea",
@@ -171,8 +171,8 @@
   ],
   "documents": [
     {
-      "id": "12b685db-2cb7-4ace-98a8-cc8e10869041",
-      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "9eed4421-adc9-4004-ace4-7ef91b91d07f",
+      "collectionId": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "title": "Heron at the millpond",
       "values": {
         "location": "Millpond, lower gate",
@@ -187,12 +187,12 @@
         "dawn"
       ],
       "starred": true,
-      "createdAt": "2026-11-25T05:19:34.143Z",
-      "updatedAt": "2026-11-25T07:19:34.143Z"
+      "createdAt": "2026-11-25T10:51:06.995Z",
+      "updatedAt": "2026-11-25T12:51:06.995Z"
     },
     {
-      "id": "9652b817-f56f-4653-a6a9-aad8feb3eeca",
-      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "6960fb3c-cbe7-465b-b134-51aaeb357897",
+      "collectionId": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "title": "First frost on the ridge",
       "values": {
         "location": "Cairn ridge path",
@@ -206,12 +206,12 @@
         "ridge"
       ],
       "starred": false,
-      "createdAt": "2026-11-20T08:19:34.143Z",
-      "updatedAt": "2026-11-20T10:19:34.143Z"
+      "createdAt": "2026-11-20T13:51:06.995Z",
+      "updatedAt": "2026-11-20T15:51:06.995Z"
     },
     {
-      "id": "55fd1341-7597-492b-bdd4-c4bcc287dc5b",
-      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "ae653ad9-76e8-4897-bc30-d53685fa725c",
+      "collectionId": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "title": "Fox tracks by the weir",
       "values": {
         "location": "Weir pool, east bank",
@@ -225,12 +225,12 @@
         "water"
       ],
       "starred": false,
-      "createdAt": "2026-11-13T06:19:34.143Z",
-      "updatedAt": "2026-11-25T14:39:44.292Z"
+      "createdAt": "2026-11-13T11:51:06.995Z",
+      "updatedAt": "2026-11-13T13:51:06.995Z"
     },
     {
-      "id": "54b846b5-c077-4780-9e44-5eb31b7a36ea",
-      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "fc69cf86-0aa9-451b-8584-7c2a18b7e294",
+      "collectionId": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "title": "Kingfisher, brief",
       "values": {
         "location": "Alder bend",
@@ -244,12 +244,12 @@
         "water"
       ],
       "starred": true,
-      "createdAt": "2026-11-07T10:19:34.143Z",
-      "updatedAt": "2026-11-07T12:19:34.143Z"
+      "createdAt": "2026-11-07T15:51:06.995Z",
+      "updatedAt": "2026-11-07T17:51:06.995Z"
     },
     {
-      "id": "ad0c033e-d0c0-4954-b1e1-c8fb298f68f4",
-      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "id": "0b357761-3f41-4bd1-b7d8-cc2dba1e8fd3",
+      "collectionId": "93d515bd-7d40-421d-b45b-1b1bdea5ef26",
       "title": "Storm light over the fell",
       "values": {
         "location": "South fell shoulder",
@@ -263,12 +263,12 @@
         "ridge"
       ],
       "starred": false,
-      "createdAt": "2026-10-30T12:19:34.143Z",
-      "updatedAt": "2026-10-30T14:19:34.143Z"
+      "createdAt": "2026-10-30T17:51:06.995Z",
+      "updatedAt": "2026-10-30T19:51:06.995Z"
     },
     {
-      "id": "37943803-b7eb-41ef-8bdf-e1de1f65d5f4",
-      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "413733cc-a924-4775-b27e-b713c458f032",
+      "collectionId": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "title": "The Left Hand of Darkness",
       "values": {
         "author": "Ursula K. Le Guin",
@@ -282,12 +282,12 @@
         "classic"
       ],
       "starred": false,
-      "createdAt": "2026-11-23T08:19:34.143Z",
-      "updatedAt": "2026-11-23T10:19:34.143Z"
+      "createdAt": "2026-11-23T13:51:06.995Z",
+      "updatedAt": "2026-11-23T15:51:06.995Z"
     },
     {
-      "id": "e12c8253-8af6-46ae-ac6e-00b9f5929e38",
-      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "caa5dfda-d3ee-4e95-bd40-7c08e1ae21ea",
+      "collectionId": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "title": "Piranesi",
       "values": {
         "author": "Susanna Clarke",
@@ -300,12 +300,12 @@
         "fantasy"
       ],
       "starred": true,
-      "createdAt": "2026-11-25T01:19:34.143Z",
-      "updatedAt": "2026-11-25T03:19:34.143Z"
+      "createdAt": "2026-11-25T06:51:06.995Z",
+      "updatedAt": "2026-11-25T08:51:06.995Z"
     },
     {
-      "id": "67c79131-18a6-4c4e-8c97-8f6e97262b3a",
-      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "ab12efc0-f624-4806-ba42-a91c3a1595fb",
+      "collectionId": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "title": "The Master and Margarita",
       "values": {
         "author": "Mikhail Bulgakov",
@@ -319,12 +319,12 @@
         "russian"
       ],
       "starred": false,
-      "createdAt": "2026-11-24T06:19:34.143Z",
-      "updatedAt": "2026-11-24T08:19:34.143Z"
+      "createdAt": "2026-11-24T11:51:06.995Z",
+      "updatedAt": "2026-11-24T13:51:06.995Z"
     },
     {
-      "id": "a516b286-bb19-4219-b4f4-a4b364108c6d",
-      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "426c7c25-a0ed-41bc-b54d-8f7f807fd0a4",
+      "collectionId": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "title": "A Field Guide to Getting Lost",
       "values": {
         "author": "Rebecca Solnit",
@@ -338,12 +338,12 @@
         "walking"
       ],
       "starred": false,
-      "createdAt": "2026-11-17T00:19:34.143Z",
-      "updatedAt": "2026-11-17T02:19:34.143Z"
+      "createdAt": "2026-11-17T05:51:06.995Z",
+      "updatedAt": "2026-11-17T07:51:06.995Z"
     },
     {
-      "id": "72eabd88-78e1-48e8-b43d-cf1c4b5cdc1b",
-      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "id": "e780e745-1751-43ef-8500-4ec5eed51c36",
+      "collectionId": "8ddc598f-0de3-45c3-99ca-c2741716aa5c",
       "title": "The Peregrine",
       "values": {
         "author": "J. A. Baker",
@@ -357,12 +357,12 @@
         "classic"
       ],
       "starred": false,
-      "createdAt": "2026-11-21T08:19:34.143Z",
-      "updatedAt": "2026-11-21T10:19:34.143Z"
+      "createdAt": "2026-11-21T13:51:06.995Z",
+      "updatedAt": "2026-11-21T15:51:06.995Z"
     },
     {
-      "id": "459a4287-868d-4db3-93da-d9207b294e14",
-      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "id": "2d89bea3-0022-4f8a-a29e-42de7a577b3a",
+      "collectionId": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "title": "Weeknight ragù",
       "values": {
         "servings": 4,
@@ -382,13 +382,13 @@
         "pasta",
         "batch-cook"
       ],
-      "starred": false,
-      "createdAt": "2026-11-24T06:19:34.143Z",
-      "updatedAt": "2026-11-25T11:17:02.756Z"
+      "starred": true,
+      "createdAt": "2026-11-24T11:51:06.995Z",
+      "updatedAt": "2026-11-24T13:51:06.995Z"
     },
     {
-      "id": "0cdcd813-59fc-4c15-927d-f4c1bd2da2a6",
-      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "id": "41411043-b543-4cf1-8fe3-b2ca04009e7c",
+      "collectionId": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "title": "Miso butter mushrooms",
       "values": {
         "servings": 2,
@@ -408,12 +408,12 @@
         "vegetarian"
       ],
       "starred": false,
-      "createdAt": "2026-11-22T06:19:34.143Z",
-      "updatedAt": "2026-11-22T08:19:34.143Z"
+      "createdAt": "2026-11-22T11:51:06.995Z",
+      "updatedAt": "2026-11-22T13:51:06.995Z"
     },
     {
-      "id": "91c8434c-a79d-4993-801b-68bc13c39847",
-      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "id": "b1d36316-a1cc-4a3b-a37e-f8976cabd19b",
+      "collectionId": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "title": "Lemon posset",
       "values": {
         "servings": 6,
@@ -431,12 +431,12 @@
         "make-ahead"
       ],
       "starred": false,
-      "createdAt": "2026-11-18T16:19:34.143Z",
-      "updatedAt": "2026-11-18T18:19:34.143Z"
+      "createdAt": "2026-11-18T21:51:06.995Z",
+      "updatedAt": "2026-11-18T23:51:06.995Z"
     },
     {
-      "id": "5019a4d7-a85d-414e-bffb-b35752a43e19",
-      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "id": "bed469f9-d578-41b5-b24b-eb73a19a6885",
+      "collectionId": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "title": "Saturday soda bread",
       "values": {
         "servings": 8,
@@ -455,9 +455,9 @@
         "bread",
         "weekend"
       ],
-      "starred": true,
-      "createdAt": "2026-11-12T20:19:34.143Z",
-      "updatedAt": "2026-11-25T11:17:09.608Z"
+      "starred": false,
+      "createdAt": "2026-11-13T01:51:06.995Z",
+      "updatedAt": "2026-11-13T03:51:06.995Z"
     }
   ]
 }

@@ -4,7 +4,8 @@ import {
 } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Collection, EMOJIS, PALETTE } from '../../../core/models';
+import type { IconName } from '../../../shared/icon/icon';
+import { Collection, PALETTE, COLLECTION_ICONS } from '../../../core/models';
 import { CollectionsStore } from '../../../state/collections.store';
 import { ToastService } from '../../../core/toast.service';
 import { Icon } from '../../../shared/icon/icon';
@@ -28,7 +29,7 @@ export class CollectionDialog implements OnInit {
   private router = inject(Router);
   private nameInput = viewChild<ElementRef<HTMLInputElement>>('nameInput');
 
-  protected emojis = EMOJIS;
+  protected icons = COLLECTION_ICONS;
   protected palette = PALETTE;
   protected pending = signal(false);
   protected confirmDelete = signal(false);
@@ -36,7 +37,7 @@ export class CollectionDialog implements OnInit {
   protected form = this.fb.nonNullable.group({
     name: ['', [Validators.required, Validators.maxLength(60)]],
     description: [''],
-    emoji: ['🗂️'],
+    icon: ['folder' as IconName],
     color: [PALETTE[0] as string],
   });
 
@@ -51,14 +52,15 @@ export class CollectionDialog implements OnInit {
   ngOnInit() {
     const col = this.collection();
     if (col) {
-      this.form.setValue({ name: col.name, description: col.description, emoji: col.emoji, color: col.color });
+      this.form.setValue({ name: col.name, description: col.description, icon: col.icon, color: col.color });
     } else {
       this.form.controls.color.setValue(PALETTE[this.store.entities().length % PALETTE.length]);
     }
   }
 
-  protected pick(control: 'emoji' | 'color', value: string) {
-    this.form.controls[control].setValue(value);
+  protected pick(control: 'icon' | 'color', value: string) {
+    if (control === 'icon') this.form.controls.icon.setValue(value as IconName);
+    else this.form.controls.color.setValue(value);
     this.form.controls[control].markAsDirty();
   }
 
@@ -71,12 +73,12 @@ export class CollectionDialog implements OnInit {
       const col = this.collection();
       if (col) {
         const ok = await this.store.update(col.id, {
-          name: v.name.trim(), description: v.description, emoji: v.emoji, color: v.color,
+          name: v.name.trim(), description: v.description, icon: v.icon, color: v.color,
         });
         if (ok) { this.toasts.success('Collection updated.'); this.closed.emit(); }
       } else {
         const created = await this.store.create({
-          name: v.name.trim(), description: v.description, emoji: v.emoji, color: v.color,
+          name: v.name.trim(), description: v.description, icon: v.icon, color: v.color,
         });
         if (created) {
           this.toasts.success('Collection created — now design its fields.');

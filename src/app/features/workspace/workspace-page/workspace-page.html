@@ -9,7 +9,7 @@
     @for (col of collections.entities(); track col.id) {
       <button type="button" (click)="go(col.id)"
               class="chip shrink-0" [class.chip-on]="col.id === id()">
-        {{ col.emoji }} {{ col.name }} <span class="opacity-60">{{ col.docCount ?? 0 }}</span>
+        <app-icon [name]="col.icon" class="text-xs" /> {{ col.name }} <span class="opacity-60">{{ col.docCount ?? 0 }}</span>
       </button>
     }
     <button type="button" class="chip shrink-0 border-dashed" (click)="dialog.set({ collection: null })">
@@ -62,8 +62,10 @@
         </div>
       } @else if (activeCollection(); as col) {
         <header class="flex flex-wrap items-start gap-4 animate-fade-up">
-          <span class="grid size-12 shrink-0 place-items-center rounded-xl text-2xl"
-                [style.background]="tint(col.color, 18)" [style.border]="'1px solid ' + tint(col.color, 40)">{{ col.emoji }}</span>
+          <span class="grid size-12 shrink-0 place-items-center rounded-xl text-xl"
+                [style.background]="tint(col.color, 18)" [style.border]="'1px solid ' + tint(col.color, 40)">
+            <app-icon [name]="col.icon" />
+          </span>
           <div class="min-w-0 flex-1">
             <h1 class="font-display text-3xl font-semibold tracking-tight text-paper-50 md:text-4xl">{{ col.name }}</h1>
             @if (col.description) { <p class="mt-1 max-w-xl text-sm text-ink-300">{{ col.description }}</p> }

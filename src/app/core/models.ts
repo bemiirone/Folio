@@ -11,9 +11,14 @@ export const FIELD_TYPES: ReadonlyArray<{ value: FieldType; label: string }> = [
   { value: 'email', label: 'Email' },
 ];
 
+import type { IconName } from '../shared/icon/icon';
+
 export const PALETTE = ['#FFB224', '#F04A32', '#5B8CFF', '#23C48E', '#E86BD0', '#9D7BFF', '#B7E34D', '#39C6E8'] as const;
 
-export const EMOJIS = ['🗂️', '📓', '📚', '🧭', '🍳', '🌿', '🧪', '🎬', '🎧', '🏔️', '🐦', '✈️'] as const;
+export const COLLECTION_ICONS: readonly IconName[] = [
+  'folder', 'book-open', 'map', 'film', 'musical-note',
+  'paper-airplane', 'ticket', 'code-bracket', 'document-text', 'wrench',
+] as const;
 
 export interface FieldDef {
   id: string;
@@ -30,7 +35,7 @@ export interface FieldDef {
 export interface Collection {
   id: string;
   name: string;
-  emoji: string;
+  icon: IconName;
   color: string;
   description: string;
   schema: FieldDef[];
@@ -54,7 +59,7 @@ export interface SearchHit {
   doc: DocRecord;
   collectionId: string;
   collectionName: string;
-  emoji: string;
+  icon: IconName;
   color: string;
   snippet: string;
   matchField: string;
@@ -93,7 +98,7 @@ export interface NewDocumentInput {
 export interface NewCollectionInput {
   name: string;
   description?: string;
-  emoji?: string;
+  icon?: IconName;
   color?: string;
 }
 

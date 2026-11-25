@@ -132,7 +132,9 @@
       <div class="flex items-center gap-2">
         <span class="size-2 rounded-full bg-viridian-500 animate-pulse-dot"></span>
         <span class="label-mono label-paper">Live preview</span>
-        <span class="ml-auto font-mono text-[11px] text-paper-700">{{ collection().emoji }} {{ collection().name }}</span>
+        <span class="ml-auto inline-flex items-center gap-1 font-mono text-[11px] text-paper-700">
+          <app-icon [name]="collection().icon" class="size-3.5" /> {{ collection().name }}
+        </span>
       </div>
       <h3 class="mt-2 font-display text-2xl font-semibold text-paper-900">Your document form</h3>
       <p class="mt-1 text-xs text-paper-700">Rebuilds on every keystroke in the builder. Values here are never saved.</p>

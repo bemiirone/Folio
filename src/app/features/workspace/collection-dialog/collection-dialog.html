@@ -29,11 +29,13 @@
       <div>
         <span class="label-mono mb-1.5 block">Icon</span>
         <div class="flex flex-wrap gap-1.5" role="group" aria-label="Collection icon">
-          @for (e of emojis; track e) {
-            <button type="button" (click)="pick('emoji', e)" [attr.aria-pressed]="form.controls.emoji.value === e"
-                    class="grid size-9 place-items-center rounded-lg border text-lg transition-all"
-                    [class.border-amber-400]="form.controls.emoji.value === e" [class.bg-ink-800]="form.controls.emoji.value === e"
-                    [class.border-ink-700]="form.controls.emoji.value !== e" [class.hover:bg-ink-800]="form.controls.emoji.value !== e">{{ e }}</button>
+          @for (i of icons; track i) {
+            <button type="button" (click)="pick('icon', i)" [attr.aria-pressed]="form.controls.icon.value === i"
+                    class="grid size-9 place-items-center rounded-lg border text-base transition-all"
+                    [class.border-amber-400]="form.controls.icon.value === i" [class.bg-ink-800]="form.controls.icon.value === i"
+                    [class.border-ink-700]="form.controls.icon.value !== i" [class.hover:bg-ink-800]="form.controls.icon.value !== i">
+              <app-icon [name]="i" />
+            </button>
           }
         </div>
       </div>

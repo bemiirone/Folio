@@ -12,7 +12,7 @@ export function seed() {
 
   const collections = [
     {
-      id: notesId, name: 'Field Notes', emoji: '🧭', color: '#23C48E',
+      id: notesId, name: 'Field Notes', icon: 'map', color: '#23C48E',
       description: 'Observations from the ridge, the millpond and the long way home.',
       createdAt: iso(24 * 40), updatedAt: iso(3),
       schema: [
@@ -24,7 +24,7 @@ export function seed() {
       ],
     },
     {
-      id: readsId, name: 'Reading Queue', emoji: '📚', color: '#5B8CFF',
+      id: readsId, name: 'Reading Queue', icon: 'book-open', color: '#5B8CFF',
       description: 'Books queued, underway and finished — with honest little reviews.',
       createdAt: iso(24 * 60), updatedAt: iso(7),
       schema: [
@@ -36,7 +36,7 @@ export function seed() {
       ],
     },
     {
-      id: kitchenId, name: 'Kitchen Ledger', emoji: '🍳', color: '#FFB224',
+      id: kitchenId, name: 'Kitchen Ledger', icon: 'wrench', color: '#FFB224',
       description: 'Recipes that earned a permanent card in the box.',
       createdAt: iso(24 * 90), updatedAt: iso(26),
       schema: [

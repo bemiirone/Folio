@@ -20,8 +20,10 @@
         <a [routerLink]="['/collections', col.id]"
            class="group flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-colors"
            [class]="col.id === activeId() ? 'bg-ink-800 border-ink-600/70' : 'border-transparent hover:bg-ink-800/60'">
-          <span class="grid size-9 shrink-0 place-items-center rounded-md text-lg"
-                [style.background]="tint(col.color, 18)" [style.border]="'1px solid ' + tint(col.color, 35)">{{ col.emoji }}</span>
+          <span class="grid size-9 shrink-0 place-items-center rounded-md text-base"
+                [style.background]="tint(col.color, 18)" [style.border]="'1px solid ' + tint(col.color, 35)">
+            <app-icon [name]="col.icon" />
+          </span>
           <span class="min-w-0 flex-1">
             <span class="block truncate text-sm font-medium" [class.text-paper-50]="col.id === activeId()" [class.text-ink-300]="col.id !== activeId()">{{ col.name }}</span>
             <span class="label-mono block">{{ col.docCount ?? 0 }} docs</span>
