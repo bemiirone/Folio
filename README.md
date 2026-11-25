@@ -1,59 +1,83 @@
 # Folio
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.5.
+Folio is a local-first document studio. Create collections, define the fields
+each collection needs, then file, search, filter, sort, star, duplicate, and
+delete documents using a responsive card-based workspace.
 
-## Development server
+Collections are flexible: a schema can include text, long text, number, date,
+select, tags, toggle, and email fields. The schema drives both the document
+editor and the live preview in Schema Studio.
 
-To start a local development server, run:
+## Tech stack
 
-```bash
-ng serve
+- **Angular 21** with standalone components, signals, `OnPush`, and zoneless
+  change detection
+- **NgRx SignalStore** for shared collection and document state, with entity
+  helpers and devtools
+- **Angular Reactive Forms** for collection, schema, and generated document
+  forms
+- **RxJS** for HTTP streams, debouncing, polling, and cancellable loads
+- **Express 5** for the local JSON API
+- **Tailwind CSS 4** for utility styling and the custom visual theme
+- **TypeScript 5.9**, **Vitest 4**, and **Node.js** for development and tests
+
+## How it works
+
+```mermaid
+flowchart LR
+  Components[Angular UI] --> Stores[Signal stores]
+  Stores --> ApiService[ApiService]
+  ApiService --> Express[Local Express API]
+  Express --> JsonDb[JSON file persistence]
+  JsonDb --> File[(server/data/folio.json)]
+  Components --> Preferences[(Browser localStorage\nsaved collection views)]
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+The Angular app communicates with the API through `ApiService`. The
+`CollectionsStore` and `DocumentsStore` own shared client state and apply
+optimistic updates for common mutations, rolling them back if a request fails.
+The Express API validates requests and persists collection and document data
+to `server/data/folio.json`. Browser `localStorage` is used separately for
+per-collection sort, starred-filter, and tag preferences—not for document data.
 
-## Code scaffolding
+The global header provides cross-collection search and API status. Search
+results navigate to the correct collection and can open a document directly.
+The workspace provides collection navigation, document cards, bulk actions,
+an editor drawer, and Schema Studio. Delete actions offer undo through toasts.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+For the detailed component map, data model, state ownership, API routes, and
+request flows, see [ARCHITECTURE.md](./ARCHITECTURE.md).
 
-```bash
-ng generate component component-name
-```
+## Run locally
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+Install dependencies, then start both the API and Angular development server:
 
 ```bash
-ng test
+npm install
+npm run start
 ```
 
-## Running end-to-end tests
+Open [http://localhost:4200](http://localhost:4200). The Angular dev server
+proxies `/api` requests to the local API at `http://localhost:3000`.
 
-For end-to-end (e2e) testing, run:
+To run only the API alongside another frontend process:
 
 ```bash
-ng e2e
+npm run api
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+## Useful commands
 
-## Additional Resources
+| Command | Description |
+| --- | --- |
+| `npm run start` | Start the API and Angular development server together. |
+| `npm run api` | Start only the Express API. |
+| `npm run build` | Create the optimized Angular build in `dist/folio/browser`. |
+| `npm run watch` | Build continuously in development mode. |
+| `npm test` | Run the Angular test suite. |
+| `npm run serve:dist` | Build the frontend, then serve it and the API from Express. |
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+The API creates `server/data/folio.json` on first run and seeds it with sample
+collections and documents. The JSON file belongs to the machine running the
+API; this single-process local store is not intended for concurrent
+multi-instance use.

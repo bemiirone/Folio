@@ -171,18 +171,10 @@
     {
       "id": "7d049f4a-2023-46e7-b5c0-cc96a8dc2c38",
       "name": "Music wants List",
-      "description": "The most desired beats that i am looking for",
+      "description": "The most desired beats that I am looking for",
       "icon": "musical-note",
       "color": "#9D7BFF",
       "schema": [
-        {
-          "id": "uwypprz4",
-          "key": "text",
-          "label": "Title",
-          "type": "text",
-          "required": false,
-          "placeholder": "Release title"
-        },
         {
           "id": "7ftxbwv0",
           "key": "text_2",
@@ -219,7 +211,7 @@
         }
       ],
       "createdAt": "2026-11-25T16:26:49.972Z",
-      "updatedAt": "2026-11-25T16:40:11.875Z"
+      "updatedAt": "2026-11-25T17:24:38.347Z"
     }
   ],
   "documents": [
@@ -511,6 +503,25 @@
       "starred": false,
       "createdAt": "2026-11-13T01:51:06.995Z",
       "updatedAt": "2026-11-13T03:51:06.995Z"
+    },
+    {
+      "id": "c0e08c04-bf90-420a-bfbe-38125ec6cf1e",
+      "collectionId": "7d049f4a-2023-46e7-b5c0-cc96a8dc2c38",
+      "title": "Places and Spaces",
+      "values": {
+        "text_2": "Donald Byrd",
+        "text_3": "Jazz Fusion",
+        "select": "Album",
+        "notes": "Available on Blue Note"
+      },
+      "tags": [
+        "jazz",
+        "fusion",
+        "blue note"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-25T17:23:03.268Z",
+      "updatedAt": "2026-11-25T17:23:03.268Z"
     }
   ]
 }
