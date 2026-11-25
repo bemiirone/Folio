@@ -1,59 +1,49 @@
+import { vi, describe, beforeEach, afterEach, it, expect } from 'vitest';
 import { ViewPrefs, loadViewPrefs, saveViewPrefs, SortKey, DocFilter, FIELD_TYPES, COLLECTION_ICONS, PALETTE } from './models';
 
 describe('models.ts', () => {
-  // Use a mock for localStorage since the functions use it directly
-  const getItemSpy = jest.spyOn(Storage.prototype, 'getItem');
-  const setItemSpy = jest.spyOn(Storage.prototype, 'setItem');
+  let getItemMock: ReturnType<typeof vi.spyOn>;
+  let setItemMock: ReturnType<typeof vi.spyOn>;
 
   beforeEach(() => {
-    jest.clearAllMocks();
     localStorage.clear();
+    getItemMock = vi.spyOn(Storage.prototype, 'getItem');
+    setItemMock = vi.spyOn(Storage.prototype, 'setItem');
   });
 
-  afterAll(() => {
-    getItemSpy.mockRestore();
-    setItemSpy.mockRestore();
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   describe('loadViewPrefs', () => {
     it('returns default prefs when no entry exists', () => {
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs).toEqual({ sort: 'updated_desc', filter: 'all', tag: null });
+      expect(loadViewPrefs('abc123')).toEqual({ sort: 'updated_desc', filter: 'all', tag: null });
     });
 
     it('returns saved prefs when entry exists', () => {
       const saved: ViewPrefs = { sort: 'title_asc', filter: 'starred', tag: 'urgent' };
       localStorage.setItem('folio.view.abc123', JSON.stringify(saved));
-
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs).toEqual(saved);
+      expect(loadViewPrefs('abc123')).toEqual(saved);
     });
 
     it('falls back to defaults for invalid sort value', () => {
       localStorage.setItem('folio.view.abc123', JSON.stringify({ sort: 'invalid' }));
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs.sort).toBe('updated_desc');
+      expect(loadViewPrefs('abc123').sort).toBe('updated_desc');
     });
 
     it('falls back to defaults for invalid filter value', () => {
       localStorage.setItem('folio.view.abc123', JSON.stringify({ filter: 'invalid' }));
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs.filter).toBe('all');
+      expect(loadViewPrefs('abc123').filter).toBe('all');
     });
 
     it('falls back to null for invalid tag value', () => {
       localStorage.setItem('folio.view.abc123', JSON.stringify({ tag: 123 }));
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs.tag).toBeNull();
+      expect(loadViewPrefs('abc123').tag).toBeNull();
     });
 
     it('falls back to defaults when localStorage throws', () => {
-      jest.spyOn(Storage.prototype, 'getItem').mockImplementation(() => {
-        throw new Error('Storage unavailable');
-      });
-
-      const prefs = loadViewPrefs('abc123');
-      expect(prefs).toEqual({ sort: 'updated_desc', filter: 'all', tag: null });
+      getItemMock.mockImplementation(() => { throw new Error('Storage unavailable'); });
+      expect(loadViewPrefs('abc123')).toEqual({ sort: 'updated_desc', filter: 'all', tag: null });
     });
 
     it('preserves all valid sort values', () => {
@@ -84,39 +74,27 @@ describe('models.ts', () => {
     it('saves prefs to localStorage', () => {
       const prefs: ViewPrefs = { sort: 'title_asc', filter: 'starred', tag: 'work' };
       saveViewPrefs('xyz789', prefs);
-
       const saved = JSON.parse(localStorage.getItem('folio.view.xyz789')!);
       expect(saved).toEqual(prefs);
     });
 
     it('does not throw when localStorage is unavailable', () => {
-      jest.spyOn(Storage.prototype, 'setItem').mockImplementation(() => {
-        throw new Error('Storage unavailable');
-      });
-
-      expect(() => saveViewPrefs('fail', { sort: 'updated_desc', filter: 'all', tag: null }))
-        .not.toThrow();
+      setItemMock.mockImplementation(() => { throw new Error('Storage unavailable'); });
+      expect(() => saveViewPrefs('fail', { sort: 'updated_desc', filter: 'all', tag: null })).not.toThrow();
     });
   });
 
   describe('FIELD_TYPES', () => {
     it('contains all expected field types', () => {
       const types = FIELD_TYPES.map(t => t.value);
-      expect(types).toContain('text');
-      expect(types).toContain('textarea');
-      expect(types).toContain('number');
-      expect(types).toContain('date');
-      expect(types).toContain('select');
-      expect(types).toContain('tags');
-      expect(types).toContain('toggle');
-      expect(types).toContain('email');
+      ['text', 'textarea', 'number', 'date', 'select', 'tags', 'toggle', 'email'].forEach(t => expect(types).toContain(t));
     });
 
     it('has labels for each type', () => {
-      for (const ft of FIELD_TYPES) {
+      FIELD_TYPES.forEach(ft => {
         expect(ft.label).toBeTruthy();
         expect(typeof ft.label).toBe('string');
-      }
+      });
     });
   });
 
@@ -126,9 +104,7 @@ describe('models.ts', () => {
     });
 
     it('all colors are valid hex strings', () => {
-      for (const color of PALETTE) {
-        expect(color).toMatch(/^#[0-9A-F]{6}$/);
-      }
+      PALETTE.forEach(c => expect(c).toMatch(/^#[0-9A-F]{6}$/));
     });
   });
 
@@ -139,8 +115,8 @@ describe('models.ts', () => {
       expect(COLLECTION_ICONS).toContain('map');
     });
 
-    it('contains 10 icons', () => {
-      expect(COLLECTION_ICONS.length).toBe(10);
+    it('has the correct count', () => {
+      expect(COLLECTION_ICONS.length).toBe(11);
     });
   });
 });

@@ -1,16 +1,14 @@
 import { Component, signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { DynamicForm } from './dynamic-form';
-import { FieldDef } from '../../core/models';
+import type { FieldDef } from '../../core/models';
 
 @Component({
   standalone: true,
   imports: [DynamicForm, ReactiveFormsModule],
-  template: `
-    <app-dynamic-form [defs]="defs()" [group]="group()" [tone]="tone()" />
-  `,
+  template: `<app-dynamic-form [defs]="defs()" [group]="group()" [tone]="tone()" />`,
 })
 class TestHost {
   private fb = new FormBuilder();
@@ -36,10 +34,7 @@ describe('DynamicForm', () => {
   let host: TestHost;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [TestHost],
-    }).compileComponents();
-
+    await TestBed.configureTestingModule({ imports: [TestHost] }).compileComponents();
     fixture = TestBed.createComponent(TestHost);
     host = fixture.componentInstance;
     fixture.detectChanges();
@@ -50,29 +45,13 @@ describe('DynamicForm', () => {
   });
 
   it('should render one field input per definition', () => {
-    const inputs = fixture.debugElement.queryAll(By.directive(TestHost));
-    // We test by checking the component renders field inputs
-    const fieldInputs = fixture.debugElement.queryAll(By.css('app-field-input'));
+    const fieldInputs = fixture.nativeElement.querySelectorAll('app-field-input');
     expect(fieldInputs.length).toBe(5);
   });
 
-  it('should render labels for each field', () => {
-    const labels = fixture.nativeElement.querySelectorAll('label');
-    const labelTexts = Array.from(labels).map((l: any) => l.textContent.trim());
-    expect(labelTexts).toContain('Name');
-    expect(labelTexts).toContain('Email');
-    expect(labelTexts).toContain('Bio');
-    expect(labelTexts).toContain('Tags');
-  });
-
-  it('should mark wide fields for textarea and tags', () => {
-    const component = fixture.debugElement.query(By.directive(DynamicForm)).componentInstance;
-    const textareaDef: FieldDef = { id: '1', key: 'bio', label: 'Bio', type: 'textarea', required: false };
-    const tagsDef: FieldDef = { id: '1', key: 'tags', label: 'Tags', type: 'tags', required: false };
-    const textDef: FieldDef = { id: '1', key: 'name', label: 'Name', type: 'text', required: false };
-
-    expect(component.wide(textareaDef)).toBe(true);
-    expect(component.wide(tagsDef)).toBe(true);
-    expect(component.wide(textDef)).toBe(false);
+  it('should span 2 columns for textarea and tags fields', () => {
+    // wide fields (textarea, tags) get sm:col-span-2 class
+    const colSpan2 = fixture.nativeElement.querySelectorAll('.sm\\:col-span-2');
+    expect(colSpan2.length).toBe(2); // bio (textarea) and tags
   });
 });

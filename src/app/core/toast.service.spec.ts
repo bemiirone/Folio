@@ -1,3 +1,4 @@
+import { vi, describe, beforeEach, it, expect, afterEach } from 'vitest';
 import { TestBed, fakeAsync, flush, tick } from '@angular/core/testing';
 import { ToastService } from './toast.service';
 
@@ -5,8 +6,13 @@ describe('ToastService', () => {
   let service: ToastService;
 
   beforeEach(() => {
+    vi.useFakeTimers();
     TestBed.configureTestingModule({ providers: [ToastService] });
     service = TestBed.inject(ToastService);
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
   });
 
   describe('initial state', () => {
@@ -79,16 +85,15 @@ describe('ToastService', () => {
   });
 
   describe('runAction', () => {
-    it('executes the action and dismisses the toast', () => {
+    it('executes the action and dismisses the toast', async () => {
       let ran = false;
       service.info('Info', { label: 'Undo', run: () => { ran = true; } });
       const toast = service.toasts()[0];
       expect(ran).toBe(false);
 
-      return service.runAction(toast).then(() => {
-        expect(ran).toBe(true);
-        expect(service.toasts().length).toBe(0);
-      });
+      await service.runAction(toast);
+      expect(ran).toBe(true);
+      expect(service.toasts().length).toBe(0);
     });
 
     it('dismisses the toast even if the action throws', async () => {
@@ -118,28 +123,25 @@ describe('ToastService', () => {
   });
 
   describe('auto-dismiss timers', () => {
-    it('auto-dismisses toasts after their life period', fakeAsync(() => {
+    it('auto-dismisses toasts after their life period', () => {
       service.success('Quick');
       expect(service.toasts().length).toBe(1);
-      tick(4100);
+      vi.advanceTimersByTime(4100);
       expect(service.toasts().length).toBe(0);
-      flush();
-    }));
+    });
 
-    it('auto-dismisses error toasts after 8s', fakeAsync(() => {
+    it('auto-dismisses error toasts after 8s', () => {
       service.error('Error!');
       expect(service.toasts().length).toBe(1);
-      tick(8100);
+      vi.advanceTimersByTime(8100);
       expect(service.toasts().length).toBe(0);
-      flush();
-    }));
+    });
 
-    it('auto-dismisses info with action after 7s', fakeAsync(() => {
+    it('auto-dismisses info with action after 7s', () => {
       service.info('Info', { label: 'Undo', run: () => {} });
       expect(service.toasts().length).toBe(1);
-      tick(7100);
+      vi.advanceTimersByTime(7100);
       expect(service.toasts().length).toBe(0);
-      flush();
-    }));
+    });
   });
 });

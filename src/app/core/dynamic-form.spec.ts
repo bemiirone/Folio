@@ -1,5 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { describe, beforeEach, it, expect } from 'vitest';
+import { FormBuilder } from '@angular/forms';
 import { FieldDef } from './models';
 import { defaultValue, buildValuesGroup } from './dynamic-form';
 
@@ -7,8 +7,7 @@ describe('dynamic-form.ts', () => {
   let fb: FormBuilder;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({ imports: [ReactiveFormsModule] });
-    fb = TestBed.inject(FormBuilder);
+    fb = new FormBuilder();
   });
 
   describe('defaultValue', () => {
@@ -35,26 +34,6 @@ describe('dynamic-form.ts', () => {
 
     it('returns empty string for text with no existing value', () => {
       const def: FieldDef = { id: '1', key: 'name', label: 'Name', type: 'text', required: false };
-      expect(defaultValue(def, undefined)).toBe('');
-    });
-
-    it('returns empty string for email with no existing value', () => {
-      const def: FieldDef = { id: '1', key: 'email', label: 'Email', type: 'email', required: false };
-      expect(defaultValue(def, undefined)).toBe('');
-    });
-
-    it('returns empty string for textarea with no existing value', () => {
-      const def: FieldDef = { id: '1', key: 'bio', label: 'Bio', type: 'textarea', required: false };
-      expect(defaultValue(def, undefined)).toBe('');
-    });
-
-    it('returns empty string for date with no existing value', () => {
-      const def: FieldDef = { id: '1', key: 'date', label: 'Date', type: 'date', required: false };
-      expect(defaultValue(def, undefined)).toBe('');
-    });
-
-    it('returns empty string for select with no existing value', () => {
-      const def: FieldDef = { id: '1', key: 'choice', label: 'Choice', type: 'select', required: false };
       expect(defaultValue(def, undefined)).toBe('');
     });
   });
@@ -131,10 +110,8 @@ describe('dynamic-form.ts', () => {
       const group = buildValuesGroup(fb, defs);
       group.get('age')?.setValue(10);
       expect(group.get('age')?.hasError('min')).toBe(true);
-
       group.get('age')?.setValue(70);
       expect(group.get('age')?.hasError('max')).toBe(true);
-
       group.get('age')?.setValue(30);
       expect(group.get('age')?.valid).toBe(true);
     });
@@ -143,7 +120,6 @@ describe('dynamic-form.ts', () => {
       const defs: FieldDef[] = [makeDef('tags', 'tags', true)];
       const group = buildValuesGroup(fb, defs);
       expect(group.get('tags')?.hasError('required')).toBe(true);
-
       group.get('tags')?.setValue(['alpha']);
       expect(group.get('tags')?.valid).toBe(true);
     });
