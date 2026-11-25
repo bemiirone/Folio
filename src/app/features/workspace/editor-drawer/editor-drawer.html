@@ -24,7 +24,7 @@
         }
         <button type="button" (click)="attemptClose()" aria-label="Close editor"
                 class="icon-btn size-9 text-paper-700 hover:bg-paper-200 hover:text-paper-900">
-          <app-icon name="x" class="text-lg" />
+          <app-icon name="x-mark" class="text-lg" />
         </button>
       </div>
       <p class="mt-2 font-mono text-[11px] uppercase tracking-wider text-paper-700">
@@ -65,7 +65,7 @@
       <footer class="border-t border-paper-300/70 bg-paper-100/85 px-7 py-4 backdrop-blur">
         @if (confirmDiscard()) {
           <div class="flex items-center gap-3 animate-pop">
-            <app-icon name="alert" class="text-lg text-amber-600" />
+            <app-icon name="exclamation-triangle" class="text-lg text-amber-600" />
             <p class="flex-1 text-sm font-medium text-paper-900">Discard unsaved changes?</p>
             <button type="button" class="btn btn-paper-ghost h-9" (click)="confirmDiscard.set(false)">Keep editing</button>
             <button type="button" class="btn btn-paper-danger h-9" (click)="closed.emit()">Discard</button>
@@ -81,8 +81,8 @@
             <span class="hidden font-mono text-[10px] text-paper-700 sm:inline">⌘/Ctrl ↵ to save</span>
             <button type="button" class="btn btn-paper-ghost" (click)="attemptClose()" [disabled]="saving()">Cancel</button>
             <button type="button" class="btn btn-primary min-w-28" (click)="save()" [disabled]="saving()">
-              @if (saving()) { <app-icon name="loader" class="animate-spin text-sm" /> Saving… }
-              @else { <app-icon name="save" class="text-sm" /> {{ doc() ? 'Save changes' : 'File document' }} }
+              @if (saving()) { <app-icon name="arrow-path" class="animate-spin text-sm" /> Saving… }
+              @else { <app-icon name="bookmark" class="text-sm" /> {{ doc() ? 'Save changes' : 'File document' }} }
             </button>
           </div>
         }

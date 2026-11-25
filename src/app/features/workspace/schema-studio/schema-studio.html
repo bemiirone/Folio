@@ -2,7 +2,7 @@
   <!-- builder -->
   <section class="rounded-2xl border border-ink-800 bg-ink-900/60 p-5 animate-fade-up" aria-label="Schema builder">
     <div class="flex flex-wrap items-center gap-3">
-      <app-icon name="sliders" class="text-lg text-amber-400" />
+      <app-icon name="adjustments-horizontal" class="text-lg text-amber-400" />
       <h2 class="font-display text-xl text-paper-50">Schema</h2>
       <span class="label-mono">{{ rows.length }} fields</span>
       @if (dirty()) {
@@ -39,7 +39,7 @@
             <div class="flex items-center gap-2">
               <button type="button" draggable="true" (dragstart)="onDragStart($event, i)" (dragend)="endDrag()"
                       aria-label="Drag to reorder field" class="icon-btn size-7 cursor-grab text-ink-500 hover:text-paper-100 active:cursor-grabbing">
-                <app-icon name="grip" class="text-base" />
+                <app-icon name="bars-2" class="text-base" />
               </button>
               <input type="text" formControlName="label" (input)="onLabelInput(row)"
                      [attr.data-row-label]="row.get('id')!.value"
@@ -120,8 +120,8 @@
       </p>
       <button type="button" class="btn btn-ghost h-9" (click)="revert()" [disabled]="!dirty() || saving()">Revert</button>
       <button type="button" class="btn btn-primary h-9 min-w-32" (click)="saveSchema()" [disabled]="!dirty() || saving()">
-        @if (saving()) { <app-icon name="loader" class="animate-spin text-sm" /> Saving… }
-        @else { <app-icon name="save" class="text-sm" /> Save schema }
+        @if (saving()) { <app-icon name="arrow-path" class="animate-spin text-sm" /> Saving… }
+        @else { <app-icon name="bookmark" class="text-sm" /> Save schema }
       </button>
     </div>
   </section>
@@ -154,7 +154,7 @@
           }
         } @else {
           <div class="mt-6 rounded-lg border border-dashed border-paper-300 px-4 py-8 text-center">
-            <app-icon name="feather" class="text-3xl text-paper-400" />
+            <app-icon name="sparkles" class="text-3xl text-paper-400" />
             <p class="mt-2 text-sm text-paper-700">Add a field to see your form take shape.</p>
           </div>
         }

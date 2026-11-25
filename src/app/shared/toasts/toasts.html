@@ -12,7 +12,7 @@
         }
         <button type="button" (click)="toasts.dismiss(t.id)" aria-label="Dismiss notification"
                 class="icon-btn -mr-1 -mt-1 size-7 text-ink-400 hover:bg-ink-800 hover:text-paper-100">
-          <app-icon name="x" class="text-sm" />
+          <app-icon name="x-mark" class="text-sm" />
         </button>
       </div>
       <span class="toast-progress absolute bottom-0 left-0 h-0.5" [class]="bar(t.kind)" [style.--life]="t.life + 'ms'"></span>

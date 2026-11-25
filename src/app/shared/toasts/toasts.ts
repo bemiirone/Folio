@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { ToastKind, ToastService } from '../../core/toast.service';
 import { Icon, IconName } from '../icon/icon';
 
-const KIND_ICON: Record<ToastKind, IconName> = { success: 'check-circle', error: 'alert', info: 'info', warn: 'alert' };
+const KIND_ICON: Record<ToastKind, IconName> = { success: 'check-circle', error: 'exclamation-triangle', info: 'information-circle', warn: 'exclamation-triangle' };
 const KIND_TEXT: Record<ToastKind, string> = {
   success: 'text-viridian-400', error: 'text-vermil-400', info: 'text-cobalt-400', warn: 'text-amber-400',
 };

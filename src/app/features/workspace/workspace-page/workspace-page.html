@@ -22,7 +22,7 @@
 
       @if (health.state() === 'offline') {
         <div class="mb-6 flex flex-wrap items-center gap-3 rounded-xl border border-vermil-500/40 bg-vermil-500/10 px-4 py-3 animate-fade-up">
-          <app-icon name="alert" class="text-lg text-vermil-400" />
+          <app-icon name="exclamation-triangle" class="text-lg text-vermil-400" />
           <div class="min-w-0 flex-1">
             <p class="text-sm font-semibold text-vermil-400">Can't reach the local API.</p>
             <p class="mt-0.5 text-xs text-ink-300">
@@ -31,21 +31,21 @@
             </p>
           </div>
           <button type="button" class="btn btn-danger h-8" (click)="retryAll()">
-            <app-icon name="undo" class="text-sm" /> Retry
+            <app-icon name="arrow-uturn-left" class="text-sm" /> Retry
           </button>
         </div>
       }
 
       @if (collections.error() && !collections.loaded()) {
         <div class="mx-auto mt-16 max-w-md rounded-2xl border border-vermil-500/40 bg-ink-900 p-8 text-center animate-pop">
-          <app-icon name="database" class="text-4xl text-vermil-400" />
+          <app-icon name="circle-stack" class="text-4xl text-vermil-400" />
           <h2 class="mt-3 font-display text-2xl text-paper-50">The drawer is stuck</h2>
           <p class="mt-2 text-sm text-ink-400">{{ collections.error() }}</p>
           <button type="button" class="btn btn-primary mt-5" (click)="collections.load()">Try again</button>
         </div>
       } @else if (collections.loaded() && !collections.entities().length) {
         <div class="card-paper mx-auto mt-14 max-w-lg p-10 text-center animate-pop">
-          <app-icon name="feather" class="text-6xl text-amber-600" />
+          <app-icon name="sparkles" class="text-6xl text-amber-600" />
           <h2 class="mt-4 font-display text-3xl font-semibold text-paper-900">Open your first collection</h2>
           <p class="mt-3 text-sm leading-relaxed text-paper-700">
             A collection is a drawer of documents that share a shape. You design the fields;
@@ -68,8 +68,8 @@
             <h1 class="font-display text-3xl font-semibold tracking-tight text-paper-50 md:text-4xl">{{ col.name }}</h1>
             @if (col.description) { <p class="mt-1 max-w-xl text-sm text-ink-300">{{ col.description }}</p> }
             <div class="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
-              <span class="label-mono inline-flex items-center gap-1.5"><app-icon name="file" class="text-sm" /> {{ col.docCount ?? 0 }} documents</span>
-              <span class="label-mono inline-flex items-center gap-1.5"><app-icon name="sliders" class="text-sm" /> {{ col.schema.length }} fields</span>
+              <span class="label-mono inline-flex items-center gap-1.5"><app-icon name="document" class="text-sm" /> {{ col.docCount ?? 0 }} documents</span>
+              <span class="label-mono inline-flex items-center gap-1.5"><app-icon name="adjustments-horizontal" class="text-sm" /> {{ col.schema.length }} fields</span>
               <span class="label-mono inline-flex items-center gap-1.5"><app-icon name="clock" class="text-sm" /> updated {{ timeAgo(col.updatedAt) }}</span>
             </div>
           </div>
@@ -88,14 +88,14 @@
                   class="-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-medium transition-colors"
                   [class.border-amber-400]="tab() === 'documents'" [class.text-paper-50]="tab() === 'documents'"
                   [class.border-transparent]="tab() !== 'documents'" [class.text-ink-400]="tab() !== 'documents'">
-            <app-icon name="grid" class="text-sm" /> Documents
+            <app-icon name="squares-2x2" class="text-sm" /> Documents
             <span class="rounded-full bg-ink-800 px-2 py-0.5 font-mono text-[10px] text-ink-300">{{ col.docCount ?? 0 }}</span>
           </button>
           <button type="button" (click)="tab.set('schema')"
                   class="-mb-px flex items-center gap-2 border-b-2 px-4 py-2.5 text-sm font-medium transition-colors"
                   [class.border-amber-400]="tab() === 'schema'" [class.text-paper-50]="tab() === 'schema'"
                   [class.border-transparent]="tab() !== 'schema'" [class.text-ink-400]="tab() !== 'schema'">
-            <app-icon name="sliders" class="text-sm" /> Schema studio
+            <app-icon name="adjustments-horizontal" class="text-sm" /> Schema studio
             <span class="rounded-full bg-ink-800 px-2 py-0.5 font-mono text-[10px] text-ink-300">{{ col.schema.length }}</span>
           </button>
         </nav>

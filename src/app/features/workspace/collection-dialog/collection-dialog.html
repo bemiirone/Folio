@@ -9,7 +9,7 @@
         <p class="mt-1 text-sm text-ink-400">{{ collection() ? 'Rename, recolor, re-icon.' : 'A drawer for one kind of document.' }}</p>
       </div>
       <button type="button" (click)="closed.emit()" aria-label="Close dialog"
-              class="icon-btn text-ink-400 hover:bg-ink-800 hover:text-paper-100"><app-icon name="x" /></button>
+              class="icon-btn text-ink-400 hover:bg-ink-800 hover:text-paper-100"><app-icon name="x-mark" /></button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="submit()" class="mt-5 space-y-4">
@@ -57,7 +57,7 @@
         <div class="border-t border-ink-800 pt-4">
           @if (confirmDelete()) {
             <div class="flex items-center gap-3 rounded-lg border border-vermil-500/40 bg-vermil-500/10 px-3 py-2.5 animate-pop">
-              <app-icon name="alert" class="text-base text-vermil-400" />
+              <app-icon name="exclamation-triangle" class="text-base text-vermil-400" />
               <p class="flex-1 text-xs text-vermil-400">This files away {{ col.docCount ?? 0 }} documents too.</p>
               <button type="button" class="text-xs font-semibold text-vermil-400 hover:underline" (click)="deleteCollection(col)">Delete</button>
               <button type="button" class="text-xs text-ink-300 hover:text-paper-100" (click)="confirmDelete.set(false)">Keep</button>
@@ -73,7 +73,7 @@
       <div class="flex items-center justify-end gap-3 pt-1">
         <button type="button" class="btn btn-ghost" (click)="closed.emit()" [disabled]="pending()">Cancel</button>
         <button type="submit" class="btn btn-primary min-w-36" [disabled]="pending()">
-          @if (pending()) { <app-icon name="loader" class="animate-spin text-sm" /> Working… }
+          @if (pending()) { <app-icon name="arrow-path" class="animate-spin text-sm" /> Working… }
           @else { {{ collection() ? 'Save changes' : 'Create collection' }} }
         </button>
       </div>

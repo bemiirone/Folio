@@ -1,5 +1,5 @@
 <div class="relative">
-  <app-icon name="search" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-ink-400" />
+  <app-icon name="magnifying-glass" class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-base text-ink-400" />
   <input #box type="text" role="combobox" aria-autocomplete="list"
          [attr.aria-expanded]="open()" aria-controls="ta-listbox"
          [attr.aria-activedescendant]="open() && results().length ? 'ta-opt-' + active() : null"
@@ -10,11 +10,11 @@
          aria-label="Search all documents" autocomplete="off" spellcheck="false" />
   <div class="absolute right-2.5 top-1/2 flex -translate-y-1/2 items-center gap-1.5">
     @if (searching()) {
-      <app-icon name="loader" class="animate-spin text-sm text-amber-400" />
+      <app-icon name="arrow-path" class="animate-spin text-sm text-amber-400" />
     } @else if (query()) {
       <button type="button" (click)="clear()" aria-label="Clear search"
               class="icon-btn size-6 text-ink-400 hover:bg-ink-800 hover:text-paper-100">
-        <app-icon name="x" class="text-xs" />
+        <app-icon name="x-mark" class="text-xs" />
       </button>
     } @else {
       <kbd>/</kbd>
@@ -32,11 +32,11 @@
 
     @if (offline()) {
       <div class="flex items-center gap-3 px-4 py-5 text-sm text-vermil-400">
-        <app-icon name="alert" /> API offline — start it with <code class="font-mono text-xs">npm run api</code>
+        <app-icon name="exclamation-triangle" /> API offline — start it with <code class="font-mono text-xs">npm run api</code>
       </div>
     } @else if (!results().length && !searching()) {
       <div class="px-4 py-6 text-center">
-        <app-icon name="feather" class="text-2xl text-ink-500" />
+        <app-icon name="sparkles" class="text-2xl text-ink-500" />
         <p class="mt-2 text-sm text-ink-300">No matches for “{{ query() }}”.</p>
         <p class="mt-1 font-mono text-[11px] text-ink-500">Titles, tags and every field value are searched.</p>
       </div>

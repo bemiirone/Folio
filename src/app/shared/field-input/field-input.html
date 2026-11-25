@@ -68,7 +68,7 @@
                 [class.bg-paper-200]="paper()" [class.text-paper-900]="paper()">
             #{{ tag }}
             <button type="button" (click)="removeTag(tag)" [attr.aria-label]="'Remove tag ' + tag"
-                    class="opacity-60 hover:opacity-100"><app-icon name="x" class="text-[10px]" /></button>
+                    class="opacity-60 hover:opacity-100"><app-icon name="x-mark" class="text-[10px]" /></button>
           </span>
         }
         <input [id]="fid" type="text" [value]="draft()" (input)="onDraft($event)" (keydown)="onTagKey($event)"
