@@ -1,0 +1,463 @@
+{
+  "collections": [
+    {
+      "id": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "name": "Field Notes",
+      "emoji": "🧭",
+      "color": "#23C48E",
+      "description": "Observations from the ridge, the millpond and the long way home.",
+      "createdAt": "2026-10-16T10:19:34.142Z",
+      "updatedAt": "2026-11-25T07:19:34.143Z",
+      "schema": [
+        {
+          "id": "c47dcddb",
+          "key": "location",
+          "label": "Location",
+          "type": "text",
+          "required": true,
+          "placeholder": "Where were you?"
+        },
+        {
+          "id": "3b81ec7e",
+          "key": "observed_on",
+          "label": "Observed on",
+          "type": "date",
+          "required": false
+        },
+        {
+          "id": "fbbfa268",
+          "key": "conditions",
+          "label": "Conditions",
+          "type": "select",
+          "required": false,
+          "options": [
+            "Clear",
+            "Overcast",
+            "Rain",
+            "Fog",
+            "Snow"
+          ]
+        },
+        {
+          "id": "903e6f1e",
+          "key": "elevation_m",
+          "label": "Elevation (m)",
+          "type": "number",
+          "required": false,
+          "min": 0,
+          "max": 9000
+        },
+        {
+          "id": "a4fba77b",
+          "key": "notes",
+          "label": "Notes",
+          "type": "textarea",
+          "required": false,
+          "placeholder": "What did you see, hear, smell?"
+        }
+      ]
+    },
+    {
+      "id": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "name": "Reading Queue",
+      "emoji": "📚",
+      "color": "#5B8CFF",
+      "description": "Books queued, underway and finished — with honest little reviews.",
+      "createdAt": "2026-09-26T10:19:34.143Z",
+      "updatedAt": "2026-11-25T03:19:34.143Z",
+      "schema": [
+        {
+          "id": "88aa11b6",
+          "key": "author",
+          "label": "Author",
+          "type": "text",
+          "required": true
+        },
+        {
+          "id": "2a5f2189",
+          "key": "pages",
+          "label": "Pages",
+          "type": "number",
+          "required": false,
+          "min": 1,
+          "max": 20000
+        },
+        {
+          "id": "2f69ecb5",
+          "key": "status",
+          "label": "Status",
+          "type": "select",
+          "required": true,
+          "options": [
+            "Queued",
+            "Reading",
+            "Finished",
+            "Abandoned"
+          ]
+        },
+        {
+          "id": "62a503bd",
+          "key": "rating",
+          "label": "Rating (1–5)",
+          "type": "number",
+          "required": false,
+          "min": 1,
+          "max": 5
+        },
+        {
+          "id": "50908287",
+          "key": "review",
+          "label": "Review",
+          "type": "textarea",
+          "required": false
+        }
+      ]
+    },
+    {
+      "id": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "name": "Kitchen Ledger",
+      "emoji": "🍳",
+      "color": "#FFB224",
+      "description": "Recipes that earned a permanent card in the box.",
+      "createdAt": "2026-08-27T10:19:34.143Z",
+      "updatedAt": "2026-11-25T11:17:09.608Z",
+      "schema": [
+        {
+          "id": "a9f21410",
+          "key": "servings",
+          "label": "Servings",
+          "type": "number",
+          "required": false,
+          "min": 1,
+          "max": 40
+        },
+        {
+          "id": "aadd703f",
+          "key": "prep_min",
+          "label": "Prep (minutes)",
+          "type": "number",
+          "required": false,
+          "min": 0,
+          "max": 2880
+        },
+        {
+          "id": "0140fcf2",
+          "key": "difficulty",
+          "label": "Difficulty",
+          "type": "select",
+          "required": false,
+          "options": [
+            "Easy",
+            "Medium",
+            "Project"
+          ]
+        },
+        {
+          "id": "808fc384",
+          "key": "ingredients",
+          "label": "Ingredients",
+          "type": "tags",
+          "required": false
+        },
+        {
+          "id": "f3f1c21d",
+          "key": "method",
+          "label": "Method",
+          "type": "textarea",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "documents": [
+    {
+      "id": "12b685db-2cb7-4ace-98a8-cc8e10869041",
+      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "title": "Heron at the millpond",
+      "values": {
+        "location": "Millpond, lower gate",
+        "observed_on": "2026-11-14",
+        "conditions": "Fog",
+        "elevation_m": 84,
+        "notes": "Grey heron stood motionless for eleven minutes, then struck twice — missed both. Fog lifted at 08:40 and it left upstream without a sound."
+      },
+      "tags": [
+        "birds",
+        "water",
+        "dawn"
+      ],
+      "starred": true,
+      "createdAt": "2026-11-25T05:19:34.143Z",
+      "updatedAt": "2026-11-25T07:19:34.143Z"
+    },
+    {
+      "id": "9652b817-f56f-4653-a6a9-aad8feb3eeca",
+      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "title": "First frost on the ridge",
+      "values": {
+        "location": "Cairn ridge path",
+        "observed_on": "2026-11-09",
+        "conditions": "Clear",
+        "elevation_m": 412,
+        "notes": "Every spiderweb between the gorse had become a white rope. Ground hard underfoot; the beck still running below the ice shelf."
+      },
+      "tags": [
+        "frost",
+        "ridge"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-20T08:19:34.143Z",
+      "updatedAt": "2026-11-20T10:19:34.143Z"
+    },
+    {
+      "id": "55fd1341-7597-492b-bdd4-c4bcc287dc5b",
+      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "title": "Fox tracks by the weir",
+      "values": {
+        "location": "Weir pool, east bank",
+        "observed_on": "2026-11-02",
+        "conditions": "Overcast",
+        "elevation_m": 71,
+        "notes": "A neat line of prints in the silt, purposeful, heading for the bridge. Otter spraint on the far rock — worth a return visit."
+      },
+      "tags": [
+        "mammals",
+        "water"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-13T06:19:34.143Z",
+      "updatedAt": "2026-11-13T08:19:34.143Z"
+    },
+    {
+      "id": "54b846b5-c077-4780-9e44-5eb31b7a36ea",
+      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "title": "Kingfisher, brief",
+      "values": {
+        "location": "Alder bend",
+        "observed_on": "2026-10-27",
+        "conditions": "Clear",
+        "elevation_m": 66,
+        "notes": "A blue spark along the water for maybe four seconds. Perched once, dropped, gone. The whole walk was worth it."
+      },
+      "tags": [
+        "birds",
+        "water"
+      ],
+      "starred": true,
+      "createdAt": "2026-11-07T10:19:34.143Z",
+      "updatedAt": "2026-11-07T12:19:34.143Z"
+    },
+    {
+      "id": "ad0c033e-d0c0-4954-b1e1-c8fb298f68f4",
+      "collectionId": "894b5c2f-f911-43c3-9651-1b23f4c7ebac",
+      "title": "Storm light over the fell",
+      "values": {
+        "location": "South fell shoulder",
+        "observed_on": "2026-10-19",
+        "conditions": "Rain",
+        "elevation_m": 505,
+        "notes": "Squall line crossed the valley in curtains. For a minute the whole moor went brass-coloured under a black sky. Sheltered by the wall and just watched."
+      },
+      "tags": [
+        "weather",
+        "ridge"
+      ],
+      "starred": false,
+      "createdAt": "2026-10-30T12:19:34.143Z",
+      "updatedAt": "2026-10-30T14:19:34.143Z"
+    },
+    {
+      "id": "37943803-b7eb-41ef-8bdf-e1de1f65d5f4",
+      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "title": "The Left Hand of Darkness",
+      "values": {
+        "author": "Ursula K. Le Guin",
+        "pages": 304,
+        "status": "Finished",
+        "rating": 5,
+        "review": "The ice crossing is the best thing I have read all year. A book about trust disguised as a book about snow."
+      },
+      "tags": [
+        "scifi",
+        "classic"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-23T08:19:34.143Z",
+      "updatedAt": "2026-11-23T10:19:34.143Z"
+    },
+    {
+      "id": "e12c8253-8af6-46ae-ac6e-00b9f5929e38",
+      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "title": "Piranesi",
+      "values": {
+        "author": "Susanna Clarke",
+        "pages": 272,
+        "status": "Finished",
+        "rating": 5,
+        "review": "The Beauty of the House is immeasurable; its Kindness infinite. Read it in two sittings and immediately wanted to start again."
+      },
+      "tags": [
+        "fantasy"
+      ],
+      "starred": true,
+      "createdAt": "2026-11-25T01:19:34.143Z",
+      "updatedAt": "2026-11-25T03:19:34.143Z"
+    },
+    {
+      "id": "67c79131-18a6-4c4e-8c97-8f6e97262b3a",
+      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "title": "The Master and Margarita",
+      "values": {
+        "author": "Mikhail Bulgakov",
+        "pages": 432,
+        "status": "Reading",
+        "rating": null,
+        "review": "Halfway. The cat has just done the thing with the primus stove. No further comment."
+      },
+      "tags": [
+        "classic",
+        "russian"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-24T06:19:34.143Z",
+      "updatedAt": "2026-11-24T08:19:34.143Z"
+    },
+    {
+      "id": "a516b286-bb19-4219-b4f4-a4b364108c6d",
+      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "title": "A Field Guide to Getting Lost",
+      "values": {
+        "author": "Rebecca Solnit",
+        "pages": 224,
+        "status": "Queued",
+        "rating": null,
+        "review": ""
+      },
+      "tags": [
+        "essays",
+        "walking"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-17T00:19:34.143Z",
+      "updatedAt": "2026-11-17T02:19:34.143Z"
+    },
+    {
+      "id": "72eabd88-78e1-48e8-b43d-cf1c4b5cdc1b",
+      "collectionId": "085f0878-66d4-4178-b3d7-967a8989102d",
+      "title": "The Peregrine",
+      "values": {
+        "author": "J. A. Baker",
+        "pages": 239,
+        "status": "Reading",
+        "rating": 4,
+        "review": "Ten winters compressed into one. Prose like weather. Pairs suspiciously well with the field notes collection."
+      },
+      "tags": [
+        "nature",
+        "classic"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-21T08:19:34.143Z",
+      "updatedAt": "2026-11-21T10:19:34.143Z"
+    },
+    {
+      "id": "459a4287-868d-4db3-93da-d9207b294e14",
+      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "title": "Weeknight ragù",
+      "values": {
+        "servings": 4,
+        "prep_min": 45,
+        "difficulty": "Medium",
+        "ingredients": [
+          "beef mince",
+          "soffritto",
+          "tomato paste",
+          "red wine",
+          "milk",
+          "tagliatelle"
+        ],
+        "method": "Brown the mince hard in batches. Soften soffritto, add paste, deglaze with wine. Return meat, add milk, then barely simmer 40 minutes. Season late."
+      },
+      "tags": [
+        "pasta",
+        "batch-cook"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-24T06:19:34.143Z",
+      "updatedAt": "2026-11-25T11:17:02.756Z"
+    },
+    {
+      "id": "0cdcd813-59fc-4c15-927d-f4c1bd2da2a6",
+      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "title": "Miso butter mushrooms",
+      "values": {
+        "servings": 2,
+        "prep_min": 15,
+        "difficulty": "Easy",
+        "ingredients": [
+          "chestnut mushrooms",
+          "white miso",
+          "butter",
+          "thyme",
+          "sourdough"
+        ],
+        "method": "Dry-fry mushrooms until squeaky, then add butter and miso off the heat. Thyme at the end. Pile onto toast. Eat standing up."
+      },
+      "tags": [
+        "quick",
+        "vegetarian"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-22T06:19:34.143Z",
+      "updatedAt": "2026-11-22T08:19:34.143Z"
+    },
+    {
+      "id": "91c8434c-a79d-4993-801b-68bc13c39847",
+      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "title": "Lemon posset",
+      "values": {
+        "servings": 6,
+        "prep_min": 10,
+        "difficulty": "Easy",
+        "ingredients": [
+          "double cream",
+          "caster sugar",
+          "lemons"
+        ],
+        "method": "Boil cream and sugar exactly 3 minutes. Off heat, whisk in lemon juice. Pour, chill overnight. It sets like a small miracle."
+      },
+      "tags": [
+        "dessert",
+        "make-ahead"
+      ],
+      "starred": false,
+      "createdAt": "2026-11-18T16:19:34.143Z",
+      "updatedAt": "2026-11-18T18:19:34.143Z"
+    },
+    {
+      "id": "5019a4d7-a85d-414e-bffb-b35752a43e19",
+      "collectionId": "24ef4639-a0ac-423a-af76-665be1b2aaa2",
+      "title": "Saturday soda bread",
+      "values": {
+        "servings": 8,
+        "prep_min": 50,
+        "difficulty": "Easy",
+        "ingredients": [
+          "flour",
+          "buttermilk",
+          "bicarb",
+          "salt",
+          "oats"
+        ],
+        "method": "Mix fast, handle barely, cross the top deeply. 40 minutes at 200°C. Wrap in a tea towel while it cools so the crust stays kind."
+      },
+      "tags": [
+        "bread",
+        "weekend"
+      ],
+      "starred": true,
+      "createdAt": "2026-11-12T20:19:34.143Z",
+      "updatedAt": "2026-11-25T11:17:09.608Z"
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { computed, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { addEntity, removeEntity, setAllEntities, updateEntity, withEntities } from '@ngrx/signals/entities';
+import { withDevtools, withGlitchTracking } from '@ngrx-toolkit/core';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { tapResponse } from '@ngrx/operators';
 import { debounceTime, pipe, switchMap, tap } from 'rxjs';
@@ -19,6 +20,7 @@ export const errorMessage = (e: unknown): string => {
 
 export const CollectionsStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('collections', withGlitchTracking()),
   withEntities<Collection>(),
   withState({ loaded: false, loading: false, error: null as string | null }),
   withComputed(({ entities }) => ({

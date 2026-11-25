@@ -1,4 +1,4 @@
-<p>document-card works!</p><article role="button" tabindex="0" (click)="open.emit(doc())" (keydown.enter)="open.emit(doc())"
+<article role="button" tabindex="0" (click)="open.emit(doc())" (keydown.enter)="open.emit(doc())"
          [attr.aria-label]="'Open ' + doc().title"
          class="card-paper relative flex h-full cursor-pointer flex-col p-4 pl-5 transition duration-200 hover:-translate-y-1 hover:shadow-lift focus-within:ring-2 focus-within:ring-amber-400/60">
   <span class="absolute bottom-3 left-0 top-3 w-1 rounded-r-full" [style.background]="color()" aria-hidden="true"></span>
@@ -8,25 +8,25 @@
             [attr.aria-label]="'Select ' + doc().title"
             class="mt-0.5 grid size-5 shrink-0 place-items-center rounded border-2 transition-all"
             [class]="selected() ? 'bg-ink-900 border-ink-900' : 'border-paper-300 bg-paper-50 opacity-0 group-hover:opacity-100 focus-visible:opacity-100'">
-      @if (selected()) { <app-icon name="check" class="text-[10px] text-paper-50" /> }
+      @if (selected()) { <app-icon name="check" class="text-[10px] text-neutral-50" /> }
     </button>
-    <h3 class="min-w-0 flex-1 font-display text-lg font-semibold leading-snug text-paper-900 line-clamp-2">{{ doc().title }}</h3>
+    <h3 class="min-w-0 flex-1 font-display text-lg font-semibold leading-snug text-neutral-800 line-clamp-2">{{ doc().title }}</h3>
     <button type="button" (click)="star.emit(doc()); $event.stopPropagation()"
             [attr.aria-label]="doc().starred ? 'Unstar document' : 'Star document'" [attr.aria-pressed]="doc().starred"
             class="icon-btn -mr-1 -mt-1 size-7 transition-transform active:scale-90"
-            [class.text-amber-500]="doc().starred" [class.text-paper-400]="!doc().starred" [class.hover:text-amber-600]="!doc().starred">
+            [class.text-amber-500]="doc().starred" [class.text-neutral-400]="!doc().starred" [class.hover:text-amber-600]="!doc().starred">
       <app-icon name="star" [filled]="doc().starred" class="text-base" />
     </button>
   </div>
 
-  <p class="mt-0.5 pl-7 font-mono text-[10px] uppercase tracking-wider text-paper-700">updated {{ timeAgo(doc().updatedAt) }}</p>
+  <p class="mt-0.5 pl-7 font-mono text-[10px] uppercase tracking-wider text-neutral-700">updated {{ timeAgo(doc().updatedAt) }}</p>
 
   @if (previewDefs().length) {
     <dl class="mt-3 space-y-1.5">
       @for (def of previewDefs(); track def.key) {
         <div class="flex gap-2 text-[13px]">
           <dt class="label-mono label-paper w-24 shrink-0 truncate pt-0.5">{{ def.label }}</dt>
-          <dd class="min-w-0 flex-1 truncate text-paper-900/90">{{ value(def) }}</dd>
+          <dd class="min-w-0 flex-1 truncate text-neutral-900/90">{{ value(def) }}</dd>
         </div>
       }
     </dl>
@@ -35,15 +35,15 @@
   <div class="mt-auto flex items-end justify-between gap-2 pt-3">
     <div class="flex min-w-0 flex-wrap gap-1">
       @for (tag of doc().tags.slice(0, 3); track tag) {
-        <span class="rounded-md border border-paper-300 bg-paper-200/70 px-1.5 py-0.5 font-mono text-[11px] text-paper-700">#{{ tag }}</span>
+        <span class="rounded-md border border-paper-300 bg-paper-200/70 px-1.5 py-0.5 font-mono text-[11px] text-neutral-700">#{{ tag }}</span>
       }
       @if (doc().tags.length > 3) {
-        <span class="px-1 font-mono text-[11px] text-paper-700">+{{ doc().tags.length - 3 }}</span>
+        <span class="px-1 font-mono text-[11px] text-neutral-700">+{{ doc().tags.length - 3 }}</span>
       }
     </div>
     <div class="flex shrink-0 gap-1 opacity-0 transition-opacity group-hover:opacity-100 focus-within:opacity-100">
       <button type="button" (click)="duplicate.emit(doc()); $event.stopPropagation()" aria-label="Duplicate document"
-              class="icon-btn size-7 text-paper-700 hover:bg-paper-200 hover:text-paper-900">
+              class="icon-btn size-7 text-neutral-700 hover:bg-paper-200 hover:text-neutral-900">
         <app-icon name="copy" class="text-sm" />
       </button>
       <button type="button" (click)="remove.emit(doc()); $event.stopPropagation()" aria-label="Delete document"
