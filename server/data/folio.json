@@ -116,11 +116,11 @@
     {
       "id": "39333551-515d-4288-ab67-cfcf88bd51d2",
       "name": "Kitchen Ledger",
-      "icon": "wrench",
+      "icon": "cake",
       "color": "#FFB224",
       "description": "Recipes that earned a permanent card in the box.",
       "createdAt": "2026-08-27T15:51:06.995Z",
-      "updatedAt": "2026-11-24T13:51:06.995Z",
+      "updatedAt": "2026-11-25T16:21:08.805Z",
       "schema": [
         {
           "id": "f5a79498",
@@ -167,6 +167,59 @@
           "required": false
         }
       ]
+    },
+    {
+      "id": "7d049f4a-2023-46e7-b5c0-cc96a8dc2c38",
+      "name": "Music wants List",
+      "description": "The most desired beats that i am looking for",
+      "icon": "musical-note",
+      "color": "#9D7BFF",
+      "schema": [
+        {
+          "id": "uwypprz4",
+          "key": "text",
+          "label": "Title",
+          "type": "text",
+          "required": false,
+          "placeholder": "Release title"
+        },
+        {
+          "id": "7ftxbwv0",
+          "key": "text_2",
+          "label": "Artist",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "tgr58vjv",
+          "key": "text_3",
+          "label": "Genre",
+          "type": "text",
+          "required": false
+        },
+        {
+          "id": "czhnwb1g",
+          "key": "select",
+          "label": "Release type",
+          "type": "select",
+          "required": false,
+          "options": [
+            "Album",
+            "Single",
+            "Digital",
+            "Cd"
+          ]
+        },
+        {
+          "id": "9rarvxm4",
+          "key": "notes",
+          "label": "Notes",
+          "type": "textarea",
+          "required": false
+        }
+      ],
+      "createdAt": "2026-11-25T16:26:49.972Z",
+      "updatedAt": "2026-11-25T16:40:11.875Z"
     }
   ],
   "documents": [
