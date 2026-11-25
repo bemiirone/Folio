@@ -17,7 +17,7 @@ export const PALETTE = ['#FFB224', '#F04A32', '#5B8CFF', '#23C48E', '#E86BD0', '
 
 export const COLLECTION_ICONS: readonly IconName[] = [
   'folder', 'book-open', 'map', 'film', 'musical-note',
-  'paper-airplane', 'ticket', 'code-bracket', 'document-text', 'wrench',
+  'paper-airplane', 'ticket', 'code-bracket', 'document-text', 'wrench', 'cake',
 ] as const;
 
 export interface FieldDef {
