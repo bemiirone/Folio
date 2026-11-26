@@ -61,7 +61,7 @@
           </button>
         </div>
       } @else if (activeCollection(); as col) {
-        <header class="flex flex-wrap items-start gap-4 animate-fade-up">
+        <header class="flex flex-col md:flex-row md:items-start gap-4 animate-fade-up">
           <span class="grid size-12 shrink-0 place-items-center rounded-xl text-xl"
                 [style.background]="tint(col.color, 18)" [style.border]="'1px solid ' + tint(col.color, 40)">
             <app-icon [name]="col.icon" />
