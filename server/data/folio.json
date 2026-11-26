@@ -170,7 +170,7 @@
     },
     {
       "id": "7d049f4a-2023-46e7-b5c0-cc96a8dc2c38",
-      "name": "Music wants List",
+      "name": "Music Wants List",
       "description": "The most desired beats that I am looking for",
       "icon": "musical-note",
       "color": "#9D7BFF",
@@ -211,7 +211,7 @@
         }
       ],
       "createdAt": "2026-11-25T16:26:49.972Z",
-      "updatedAt": "2026-11-25T17:24:38.347Z"
+      "updatedAt": "2026-11-26T09:07:14.861Z"
     }
   ],
   "documents": [
@@ -512,7 +512,7 @@
         "text_2": "Donald Byrd",
         "text_3": "Jazz Fusion",
         "select": "Album",
-        "notes": "Available on Blue Note"
+        "notes": "Available on Blue Note records. Original can be found on Discogs"
       },
       "tags": [
         "jazz",
@@ -521,7 +521,7 @@
       ],
       "starred": false,
       "createdAt": "2026-11-25T17:23:03.268Z",
-      "updatedAt": "2026-11-25T17:23:03.268Z"
+      "updatedAt": "2026-11-26T09:07:14.861Z"
     }
   ]
 }

@@ -11,9 +11,11 @@ import { ToastService } from '../core/toast.service';
 import { DocFilter, DocRecord, LoadDocsParams, NewDocumentInput, SortKey } from '../core/models';
 import { uid } from '../core/format';
 import { CollectionsStore, errorMessage } from './collections.store';
+import { withDevtools, withGlitchTracking } from '@ngrx-toolkit/core';
 
 export const DocumentsStore = signalStore(
   { providedIn: 'root' },
+  withDevtools('documents', withGlitchTracking()),
   withEntities<DocRecord>(),
   withState({
     collectionId: null as string | null,
